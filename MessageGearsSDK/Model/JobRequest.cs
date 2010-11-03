@@ -1,0 +1,97 @@
+using System;
+using System.Collections.Generic;
+
+namespace MessageGears.Model
+{
+	/// <summary>
+	/// An abstract class used by several request classes that submit various job requests.
+	/// </summary>
+	public abstract class JobRequest
+	{
+		private TemplateLanguage _templateLanguage = TemplateLanguage.FREEMARKER;
+		
+		/// <summary>
+		/// The value place in the "from address" email header.
+		/// This value can be dynamically generated using the seleced template language.
+		/// </summary>
+		public String FromAddress { get; set; }
+		
+		/// <summary>
+		/// The optional value place in the "from address" email header and is often called the pretty from address.
+		/// It can may your emails much more visually appealing by allowing your to place a name along with an email address to make your messages more readable.
+		/// This value can be dynamically generated using the seleced template language.
+		/// </summary>
+		public String FromName { get; set; }
+		
+		/// <summary>
+		/// The value to be placed in the subject line header.
+		/// This value can be dynamically generated using the seleced template language.
+		/// </summary>
+		public String SubjectLine { get; set; }
+
+		/// <summary>
+		/// The content to be place in the html part of the message.  This value is optional, but if not provided you must supply a Text Template.
+		/// If both the HTML and Text template are provided, a multi-part message will be sent to the recipients of the message containing both forms of content.
+		/// This value can be dynamically generated using the seleced template language.
+		/// </summary>
+		public String HtmlTemplate { get; set; }
+		
+		/// <summary>
+		/// The content to be place in the html part of the message.  This value is optional, but if not provided you must supply a Text Template.
+		/// If both the HTML and Text template are provided, a multi-part message will be sent to the recipients of the message containing both forms of content.
+		/// This value can be dynamically generated using the seleced template language.
+		/// </summary>
+		public String TextTemplate { get; set; }
+
+		/// <summary>
+		/// Defines the template language to be used to render any dynamic portions of the message headers or content.
+		/// The default value is FREEMARKER.
+		/// </summary>
+		public TemplateLanguage TemplateLanguage {
+			get { return this._templateLanguage; }
+			set { _templateLanguage = value; }
+		}
+		
+		/// <summary>
+		/// The Id of the IP Address group to be used to deliver a message.  if no value is supplied the default value defined for your MessageGears account will be used.
+		/// Most customers will only have one IP Selector and should never need to used this parameter.
+		/// If you are interested in using more that one IP address group, please contact MessageGears support.
+		/// </summary>
+		public String IpSelector { get; set; }
+		
+		/// <summary>
+		/// The character set to be used for the message headers and content.  If no value is specified, UTF8 is used.
+		/// </summary>
+		public String CharacterSet { get; set; }
+		
+		/// <summary>
+		/// This value is used to send an email message should a Job Error occur.  It can be very useful in testing but should be used cautiously for transactional messages in a
+		/// high volume account.
+		/// </summary>
+		public String NotificationEmailAddress { get; set; }
+		
+		/// <summary>
+		/// Used to set the reply-to address header.  This address is often set to "do_not_reply@mycompany.com" or "sales@mycompany.com".
+		/// The MessageGears service does not act on messages sent to it as a result of a reply-to and customers should use their own email domain for this value.
+		/// </summary>
+		public String ReplyToAddress { get; set; }
+		
+		/// <summary>
+		/// A sometimes used field which has special meaning to some email readers.  It can be useful if your are sending an email job on behalf of another company and need to show 
+		/// both companies name and address in the from headers.  See the MessageGears API documention for examples and screenshots of how this header can be used.
+		/// </summary>
+		public String OnBehalfOfAddress { get; set; }
+
+		/// <summary>
+		/// Used in conjunction with the OnBehalfOfAddress field and privides the "pretty from address".
+		/// </summary>
+		public String OnBehalfOfName { get; set; }
+
+		/// <summary>
+		/// A list of up to 5 attachments to send with the job's email messages.
+		/// </summary>
+		public List<Attachment> attachments = new List<Attachment> ();
+		
+	}
+}
+
