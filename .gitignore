@@ -10,6 +10,7 @@ credentials.config
 *.csproj.user
 *.sln
 obj
+bin
 UpgradeLog.XML
 _UpgradeReport_Files
 

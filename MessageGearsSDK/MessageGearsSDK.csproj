@@ -67,7 +67,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="MessageGearsClient.cs" />
     <Compile Include="Model\TemplateLanguage.cs" />
     <Compile Include="Model\JobRequest.cs" />
