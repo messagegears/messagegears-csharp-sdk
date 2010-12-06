@@ -92,6 +92,26 @@ namespace MessageGears.Model
 		/// </summary>
 		public List<Attachment> attachments = new List<Attachment> ();
 		
+		/// <summary>
+		/// If set to “true” (case insensitive) all links in the HTML content will be made trackable.
+		/// Otherwise, they will not.  If true, any link/href inside an anchor “<a>” tag, or image map “<map>” tag will be marked as trackable.
+		/// If the tag specifies a “name” attribute, the name will be set as the link name in your activity data.
+		/// </summary>
+		public Boolean AutoTrack { get; set; }
+		
+		/// <summary>
+		/// Used to specify a string to be appended to each trackable link in your HTML content.
+		/// This parameter will only be accepted if the AutoTrack option above is set to “true”.
+		/// It can be helpful when used in conjunction with a web analytics system such as Google Analytics to add your campaign Id and other data to each of your links.
+		/// </summary>
+		public String UrlAppend { get; set; }
+		
+		/// <summary>
+		/// Used to provide a custom domain name to be used for trackable links and the open tracking URL.
+		/// You must set a CNAME in your DNS that points to www.messagegears.net.  Please test this carefully before using.
+		/// </summary>
+		public String CustomTrackingDomain { get; set; }
+		
 	}
 }
 

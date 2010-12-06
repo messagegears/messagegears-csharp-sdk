@@ -474,6 +474,16 @@ namespace MessageGears
 			data.Append ("&SubjectLine=" + HttpUtility.UrlEncode (request.SubjectLine));
 			data.Append ("&HtmlTemplate=" + HttpUtility.UrlEncode (request.HtmlTemplate));
 			data.Append ("&TemplateLanguage=" + HttpUtility.UrlEncode (request.TemplateLanguage.ToString()));
+			data.Append ("&IpSelector=" + HttpUtility.UrlEncode (request.IpSelector));
+			data.Append ("&CharacterSet=" + HttpUtility.UrlEncode (request.CharacterSet));
+			data.Append ("&NotificationEmailAddress=" + HttpUtility.UrlEncode (request.NotificationEmailAddress));
+			data.Append ("&ReplyToAddress=" + HttpUtility.UrlEncode (request.ReplyToAddress));
+			data.Append ("&OnBehalfOfAddress=" + HttpUtility.UrlEncode (request.OnBehalfOfAddress));
+			data.Append ("&OnBehalfOfName=" + HttpUtility.UrlEncode (request.OnBehalfOfName));
+			data.Append ("&AutoTrack=" + HttpUtility.UrlEncode (request.AutoTrack.ToString()));
+			data.Append ("&UrlAppend=" + HttpUtility.UrlEncode (request.UrlAppend));
+			data.Append ("&CustomTrackingDomain=" + HttpUtility.UrlEncode (request.CustomTrackingDomain));
+			
 			String attachmentCount;
 			for (int i=0; i < request.attachments.Count; i++)
 			{
