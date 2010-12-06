@@ -61,10 +61,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="AWSSDK, Version=1.1.0.1, Culture=neutral, PublicKeyToken=cd2d24cd2bace800">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\AWSSDK.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MessageGearsClient.cs" />
@@ -77,7 +73,6 @@
     <Compile Include="Model\Attachment.cs" />
     <Compile Include="MessageGearsActivityFileProcessor.cs" />
     <Compile Include="MessageGearsProperties.cs" />
-    <Compile Include="MessageGearsQueuePoller.cs" />
     <Compile Include="MessageGearsListener.cs" />
     <Compile Include="Model\ActivityType.cs" />
   </ItemGroup>
