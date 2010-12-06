@@ -43,13 +43,19 @@ namespace MessageGears
 		/// <param name="listener">
 		/// A <see cref="MessageGearsListener"/>
 		/// </param>
-		public MessageGearsQueuePoller(MessageGearsProperties props, MessageGearsListener listener)
+		/// <param name="myAwsAccountKey">
+		/// You AWS Account Key
+		/// </param>
+		/// <param name="myAwsSecretKey">
+		/// Your AWS Secret Key
+		/// </param>
+		public MessageGearsQueuePoller(MessageGearsProperties props, MessageGearsListener listener, String myAwsAccountKey, String myAwsSecretKey)
 		{
 			this.props = props;
 			this.emptyQueueDelayMillis = props.EmptyQueuePollingDelaySecs * 1000;
 			this.listener = listener;
 			AmazonSQSConfig config = new AmazonSQSConfig().WithMaxErrorRetry(props.SQSMaxErrorRetry);
-			this.sqs = AWSClientFactory.CreateAmazonSQSClient (props.MyAWSAccountKey, props.MyAWSSecretKey, config);
+			this.sqs = AWSClientFactory.CreateAmazonSQSClient (myAwsAccountKey, myAwsSecretKey, config);
 			this.receiveMessageRequest = new ReceiveMessageRequest ()
 				.WithQueueUrl (props.MyAWSEventQueueUrl)
 				.WithMaxNumberOfMessages (props.SQSMaxBatchSize)

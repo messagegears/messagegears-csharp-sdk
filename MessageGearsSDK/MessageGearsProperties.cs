@@ -34,16 +34,6 @@ namespace MessageGears
 		public String MyMessageGearsApiKey { get; set; }
 		
 		/// <summary>
-		/// Your Amazon Web Services Account Key.  This value is never sent to MessageGears and is only used to access your S3 and SQS resources in Amazon.
-		/// </summary>
-		public String MyAWSAccountKey { get; set; }
-		
-		/// <summary>
-		/// Your Amazon Web Services Secret Key.  This value is never sent to MessageGears and is only used to access your S3 and SQS resources in Amazon.
-		/// </summary>
-		public String MyAWSSecretKey { get; set; }
-		
-		/// <summary>
 		/// The URL of the queue to be used to retrieve events origintaing from the MessageGears system.
 		/// You will need to setup the real-time event feed feature in your MessageGears portal by entering this queue url and selecting the events that you wish to subscribe to.
 		/// You will also need to grant permission to the MessageGears AWS account id to be able to send messages to this queue.
@@ -100,8 +90,6 @@ namespace MessageGears
 			dump = dump + " MessageGearsAWSAccountId=" + MessageGearsAWSAccountId;
 			dump = dump + " MyMessageGearsAccountId=" + MyMessageGearsAccountId;
 			dump = dump + " MyMessageGearsApiKey=" + "<hidden>";
-			dump = dump + " MyAWSAccountKey=" + MyAWSAccountKey;
-			dump = dump + " MyAWSSecretKey=" + "<hidden>";
 			dump = dump + " MyAWSEventQueueUrl=" + MyAWSEventQueueUrl;
 			dump = dump + " NumberOfEventPollerThreads=" + NumberOfEventPollerThreads;
 			dump = dump + " EmptyQueuePollingDelaySecs=" + EmptyQueuePollingDelaySecs;
