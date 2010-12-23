@@ -75,6 +75,7 @@
     <Compile Include="MessageGearsProperties.cs" />
     <Compile Include="MessageGearsListener.cs" />
     <Compile Include="Model\ActivityType.cs" />
+    <Compile Include="Model\BulkJobSummaryRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

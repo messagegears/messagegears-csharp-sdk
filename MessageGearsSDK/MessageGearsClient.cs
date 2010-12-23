@@ -224,6 +224,43 @@ namespace MessageGears
 		}
 		
 		/// <summary>
+		/// Used to return a summary of the total activity for a bulk job (total clicks, bounces, etc.).
+		/// </summary>
+		/// <param name="request">
+		/// The request object.
+		/// </param>
+		/// <returns>
+		/// A <see cref="BulkJobSummaryResponse"/>
+		/// </returns>
+		public BulkJobSummaryResponse BulkJobSummary(BulkJobSummaryRequest request) 
+		{
+			// build POST data
+			StringBuilder data = new StringBuilder ();
+			data.Append ("Action=" + BulkJobSummaryRequest.Action);
+			appendCredentials(ref data);
+			data.Append("&BulkJobRequestId=" + HttpUtility.UrlEncode (request.BulkJobRequestId));
+			data.Append("&BulkJobCorrelationId=" + HttpUtility.UrlEncode (request.BulkJobCorrelationId));
+			
+			// invoke endpoint
+			string response = invoke (data);
+			
+			// deserialize response into BulkJobSummaryResponse
+			XmlSerializer serializer = new XmlSerializer (typeof(BulkJobSummaryResponse));
+			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
+				BulkJobSummaryResponse objectResponse = (BulkJobSummaryResponse)serializer.Deserialize (sr);
+				if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
+				{
+					log.Info("Bulk Job Summary successfully processed: " + objectResponse.RequestId);
+				}
+				else
+				{
+					log.Error("Bulk Job Summary failed: " + objectResponse.RequestId);
+				}
+				return objectResponse;
+			}
+		}
+
+		/// <summary>
 		/// Used to create a file that contains all of the account activity of a certain type for the specified day.
 		/// </summary>
 		/// <param name="activityDate">
@@ -357,6 +394,7 @@ namespace MessageGears
 	
 		private void appendBaseJobRequest(ref StringBuilder data, JobRequest request)
 		{
+			data.Append ("&TextTemplate=" + HttpUtility.UrlEncode (request.TextTemplate));
 			data.Append ("&FromAddress=" + HttpUtility.UrlEncode (request.FromAddress));
 			data.Append ("&FromName=" + HttpUtility.UrlEncode (request.FromName));
 			data.Append ("&SubjectLine=" + HttpUtility.UrlEncode (request.SubjectLine));
