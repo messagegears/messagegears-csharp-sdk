@@ -53,11 +53,10 @@ namespace MessageGears.Model
 		}
 		
 		/// <summary>
-		/// The Id of the IP Address group to be used to deliver a message.  if no value is supplied the default value defined for your MessageGears account will be used.
-		/// Most customers will only have one IP Selector and should never need to used this parameter.
-		/// If you are interested in using more that one IP address group, please contact MessageGears support.
+		/// The Id of the Subaccount to be used to deliver a message.  if no value is supplied the default value defined for your MessageGears account will be used.
+		/// Most customers will not have subaccounts and should never need to used this parameter.
 		/// </summary>
-		public String IpSelector { get; set; }
+		public String SubaccountId { get; set; }
 		
 		/// <summary>
 		/// The character set to be used for the message headers and content.  If no value is specified, UTF8 is used.
@@ -111,6 +110,25 @@ namespace MessageGears.Model
 		/// You must set a CNAME in your DNS that points to www.messagegears.net.  Please test this carefully before using.
 		/// </summary>
 		public String CustomTrackingDomain { get; set; }
+		
+		/// <summary>
+		/// Used to store a user-defined string.  This should be a unique value for each job submitted.
+		/// For bulk jobs, you can retrieve the bulk job summary data by supplying a correlation id to search by.
+		/// This can be very useful if a networking error interrupts a bulk job submission and you are not sure if the job was accepted.
+		/// </summary>
+		public String CorrelationId { get; set; }
+		
+		/// <summary>
+		/// If set to "true", the "List-Unsubscribe" header will be unserted into the messages sent for a job.  This header has special meaning to some ISPs (like GMail).
+		/// When these headers are present, some Email Readers will present an "Unsubscribe" button to the email recipient.  This can provide a better option for the recipient and 
+		/// they may press "unsubscribe" instead of "spam" when they negatively to your message.
+		/// </summary>
+		public Boolean UnsubscribeHeader { get; set; }
+	
+		/// <summary>
+		/// A list of up to 5 headers that will be set for each message in the job.
+		/// </summary>
+		public List<Header> headers = new List<Header> ();
 		
 	}
 }

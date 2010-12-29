@@ -72,6 +72,80 @@ namespace MessageGears
 		}
 		
 		/// <summary>
+		/// Used to craete a new subaccount
+		/// </summary>
+		/// <param name="request">
+		/// A <see cref="CreateSubaccountRequest"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="CreateSubaccountResponse"/>
+		/// </returns>
+		public CreateSubaccountResponse CreateSubaccount (CreateSubaccountRequest request)
+		{
+			// build POST data 
+			StringBuilder data = new StringBuilder ();
+			data.Append ("Action=" + HttpUtility.UrlEncode (CreateSubaccountRequest.Action));
+			appendCredentials(ref data);
+			appendBaseSubaccountRequest(ref data, request);
+			
+			// invoke endpoint
+			string response = invoke (data);
+			
+			// deserialize response into TransactionalJobSubmitResponse
+			XmlSerializer serializer = new XmlSerializer (typeof(CreateSubaccountResponse));
+			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
+				CreateSubaccountResponse objectResponse = (CreateSubaccountResponse)serializer.Deserialize (sr);
+				if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
+				{
+					log.Info("Create Subaccount successfully processed: " + objectResponse.RequestId);
+				}
+				else
+				{
+					log.Error("Create Subaccount failed: " + objectResponse.RequestId);
+				}
+				return objectResponse;
+			}
+		}
+
+		/// <summary>
+		/// Used to update a subaccount
+		/// </summary>
+		/// <param name="request">
+		/// A <see cref="UpdateSubaccountRequest"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="UpdateSubaccountResponse"/>
+		/// </returns>
+		public UpdateSubaccountResponse UpdateSubaccount (UpdateSubaccountRequest request)
+		{
+			// build POST data 
+			StringBuilder data = new StringBuilder ();
+			data.Append ("Action=" + HttpUtility.UrlEncode (UpdateSubaccountRequest.Action));
+			appendCredentials(ref data);
+			data.Append ("&Id=" + HttpUtility.UrlEncode (request.Id.ToString()));
+			appendBaseSubaccountRequest(ref data, request);
+			
+			// invoke endpoint
+			string response = invoke (data);
+			
+			// deserialize response into TransactionalJobSubmitResponse
+			XmlSerializer serializer = new XmlSerializer (typeof(UpdateSubaccountResponse));
+			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
+				UpdateSubaccountResponse objectResponse = (UpdateSubaccountResponse)serializer.Deserialize (sr);
+				if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
+				{
+					log.Info("Update Subaccount successfully processed: " + objectResponse.RequestId);
+				}
+				else
+				{
+					log.Error("Update Subaccount failed: " + objectResponse.RequestId);
+				}
+				return objectResponse;
+			}
+		}
+		
+		
+		/// <summary>
 		/// Allows you to submit your message content for rendering without actually sending a email message.
 		/// This can be used to build a UI tool to test content as it is being created.  A list of errors will be
 		/// returned if there are and problems rendering the message.
@@ -127,7 +201,6 @@ namespace MessageGears
 			data.Append ("Action=" + HttpUtility.UrlEncode (BulkJobSubmitRequest.Action));
 			data.Append ("&RecipientListXmlUrl=" + HttpUtility.UrlEncode (request.RecipientListXmlUrl));
 			data.Append ("&ContextDataXml=" + HttpUtility.UrlEncode (request.ContextDataXml));
-			data.Append ("&CorrelationId=" + HttpUtility.UrlEncode (request.CorrelationId));
 			appendCredentials(ref data);
 			appendBaseJobRequest(ref data, request);
 			
@@ -392,6 +465,14 @@ namespace MessageGears
 			data.Append ("&ApiKey=" + HttpUtility.UrlEncode (properties.MyMessageGearsApiKey));
 		}
 	
+		private void appendBaseSubaccountRequest(ref StringBuilder data, SubaccountRequest request)
+		{
+			data.Append ("&Name=" + HttpUtility.UrlEncode (request.Name));
+			data.Append ("&UrlAppend=" + HttpUtility.UrlEncode (request.UrlAppend));
+			data.Append ("&AutoTrack=" + HttpUtility.UrlEncode (request.AutoTrack.ToString()));
+			data.Append ("&CustomTrackingDomain=" + HttpUtility.UrlEncode (request.CustomTrackingDomain));
+		}
+		
 		private void appendBaseJobRequest(ref StringBuilder data, JobRequest request)
 		{
 			data.Append ("&TextTemplate=" + HttpUtility.UrlEncode (request.TextTemplate));
@@ -400,7 +481,7 @@ namespace MessageGears
 			data.Append ("&SubjectLine=" + HttpUtility.UrlEncode (request.SubjectLine));
 			data.Append ("&HtmlTemplate=" + HttpUtility.UrlEncode (request.HtmlTemplate));
 			data.Append ("&TemplateLanguage=" + HttpUtility.UrlEncode (request.TemplateLanguage.ToString()));
-			data.Append ("&IpSelector=" + HttpUtility.UrlEncode (request.IpSelector));
+			data.Append ("&SubaccountId=" + HttpUtility.UrlEncode (request.SubaccountId));
 			data.Append ("&CharacterSet=" + HttpUtility.UrlEncode (request.CharacterSet));
 			data.Append ("&NotificationEmailAddress=" + HttpUtility.UrlEncode (request.NotificationEmailAddress));
 			data.Append ("&ReplyToAddress=" + HttpUtility.UrlEncode (request.ReplyToAddress));
@@ -409,6 +490,8 @@ namespace MessageGears
 			data.Append ("&AutoTrack=" + HttpUtility.UrlEncode (request.AutoTrack.ToString()));
 			data.Append ("&UrlAppend=" + HttpUtility.UrlEncode (request.UrlAppend));
 			data.Append ("&CustomTrackingDomain=" + HttpUtility.UrlEncode (request.CustomTrackingDomain));
+			data.Append ("&UnsubscribeHeader=" + HttpUtility.UrlEncode (request.UnsubscribeHeader.ToString()));
+			data.Append ("&CorrelationId=" + HttpUtility.UrlEncode (request.CorrelationId));
 			
 			String attachmentCount;
 			for (int i=0; i < request.attachments.Count; i++)
@@ -417,6 +500,14 @@ namespace MessageGears
 				data.Append ("&AttachmentUrl." + attachmentCount + "=" + HttpUtility.UrlEncode (request.attachments[i].Url));
 				data.Append ("&AttachmentName." + attachmentCount + "=" + HttpUtility.UrlEncode (request.attachments[i].DisplayName));
 				data.Append ("&AttachmentContentType." + attachmentCount + "=" + HttpUtility.UrlEncode (request.attachments[i].ContentType));
+			}
+
+			String headerCount;
+			for (int i=0; i < request.headers.Count; i++)
+			{
+				headerCount = (i+1).ToString("D");
+				data.Append ("&HeaderName." + headerCount + "=" + HttpUtility.UrlEncode (request.headers[i].Name));
+				data.Append ("&HeaderValue." + headerCount + "=" + HttpUtility.UrlEncode (request.headers[i].Value));
 			}
 		}
 	}
