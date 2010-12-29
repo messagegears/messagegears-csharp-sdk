@@ -1,0 +1,379 @@
+<xsd:schema xmlns:mg="http://messagegears.com/3.1/webService"
+    targetNamespace="http://messagegears.com/3.1/webService" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified">
+    <xsd:element name="TransactionalJobSubmitResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:Result" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:RequestErrors" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="BulkJobSubmitResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:Result" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:RequestErrors" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="AccountActivityResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:Result" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="ActivityDate" type="xsd:date" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="mg:RequestErrors" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="mg:ActivityItems" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="MessagePreviewResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:Result" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:RequestErrors" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="mg:RenderErrors" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="mg:PreviewContent" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="PreviewContent">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="FromAddress" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="FromName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="OnBehalfOfName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="OnBehalfOfAddress" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="ReplyToAddress" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="SubjectLine" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="TextContent" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="HtmlContent" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="mg:SpamAssassinReport" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="SpamAssassinReport">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Spam" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Score" type="xsd:double" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Requried" type="xsd:double" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:SpamAssassinRules" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="SpamAssassinRules">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="mg:SpamAssassinRule" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="SpamAssassinRule">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Points" type="xsd:double" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="RuleName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Description" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="BulkJobSummaryResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:Result" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:RequestErrors" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="mg:BulkJobSummary" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="BulkJobSummary">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="BulkJobRequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="Messages" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Clicks" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Opens" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Bounces" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Unsubscribes" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Deliveries" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="SpamComplaints" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="RenderErrors" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:BulkJobErrors" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="AccountSummaryResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:Result" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:RequestErrors" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="mg:AccountSummary" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="AccountSummary">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="ActivityDate" type="xsd:date" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Messages" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Clicks" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Opens" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Bounces" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Unsubscribes" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Deliveries" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="SpamComplaints" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="RenderErrors" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="JobErrors" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="CreateSubaccountResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:Result" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:RequestErrors" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="mg:Subaccount" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="UpdateSubaccountResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:Result" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:RequestErrors" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="Subaccount">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Id" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="Result">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="REQUEST_SUCCESSFUL" />
+                <xsd:enumeration value="REQUEST_FAILED" />
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:element>
+    <xsd:element name="RequestErrors">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="mg:RequestError" minOccurs="1" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="RequestError">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="ErrorCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="ErrorMessage" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="BulkJobErrors">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="mg:BulkJobError" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="BulkJobError">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="ErrorCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="ErrorMessage" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="Recipient">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="ContextData">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="ActivityItems">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="mg:OpenActivity" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="mg:ClickActivity" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="mg:UnsubActivity" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="mg:BouncedMessageActivity" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="mg:DeliveredMessageActivity" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="mg:SpamComplaintActivity" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="mg:RenderErrorActivity" minOccurs="0" maxOccurs="unbounded" />
+                <xsd:element ref="mg:JobErrorActivity" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="OpenActivity">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="EmailAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="IpAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="UserAgent" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="ActivityId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Microsite" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="ClickActivity">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="EmailAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="IpAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="UserAgent" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Url" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="UrlName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="ActivityId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Microsite" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="UnsubActivity">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="EmailAddress" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="IpAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="UserAgent" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="ActivityId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Microsite" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="BouncedMessageActivity">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="EmailAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Category" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="CategoryCode" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Details" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="IpAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="MessageSize" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="ActivityId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="DeliveredMessageActivity">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="EmailAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="IpAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="MessageSize" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="ActivityId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="SpamComplaintActivity">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="EmailAddress" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Isp" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="IpAddress" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="Subject" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="ActivityId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="RenderErrorActivity">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="EmailAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:RenderErrors" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="ActivityId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="RenderErrors">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="mg:RenderError" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="RenderError">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="ErrorCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="ErrorMessage" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="JobErrorActivity">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:JobError" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="ActivityId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="JobError">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="ErrorCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="ErrorMessage" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
