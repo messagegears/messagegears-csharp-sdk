@@ -12,18 +12,6 @@ namespace MessageGears
 		public String MessageGearsEndPoint { get; set; }
 		
 		/// <summary>
-		/// The Amazon Web Services Canonical Id for the MessageGears AWS account.
-		/// This value is needed to assign S3 permissions to the MessageGears account.
-		/// </summary>
-		public String MessageGearsAWSCanonicalId { get; set; }
-		
-		/// <summary>
-		/// The Amazon Web Services Account Id for the MessageGears AWS account.
-		/// This value is needed to assign SQS permissions to the MessageGears account so it may send messages to a queue.
-		/// </summary>
-		public String MessageGearsAWSAccountId { get; set; }
-		
-		/// <summary>
 		/// Your MessageGears Account Id.
 		/// </summary>
 		public String MyMessageGearsAccountId { get; set; }
@@ -78,6 +66,18 @@ namespace MessageGears
 		public int SQSMaxErrorRetry  { get; set; }
 
 		/// <summary>
+		/// Public constructor setting default values for the MessageGearsProperties class.
+		/// </summary>
+		public MessageGearsProperties () {
+			MessageGearsEndPoint="https://api.messagegears.net/3.1/WebService";
+			NumberOfEventPollerThreads=1;
+			EmptyQueuePollingDelaySecs=30;
+			SQSMaxBatchSize=1;
+			SQSVisibilityTimeoutSecs=600;
+			DownloadDirectory=".";
+		}
+
+		/// <summary>
 		/// Dumps out all of the properties.
 		/// </summary>
 		/// <returns>
@@ -86,8 +86,6 @@ namespace MessageGears
 		public override String ToString()
 		{
 			String dump = "MessageGearsEndPoint=" + MessageGearsEndPoint;
-			dump = dump + " MessageGearsAWSCanonicalId=" + MessageGearsAWSCanonicalId;
-			dump = dump + " MessageGearsAWSAccountId=" + MessageGearsAWSAccountId;
 			dump = dump + " MyMessageGearsAccountId=" + MyMessageGearsAccountId;
 			dump = dump + " MyMessageGearsApiKey=" + "<hidden>";
 			dump = dump + " MyAWSEventQueueUrl=" + MyAWSEventQueueUrl;

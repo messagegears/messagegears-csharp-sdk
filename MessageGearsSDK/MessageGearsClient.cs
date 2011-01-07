@@ -332,6 +332,26 @@ namespace MessageGears
 				return objectResponse;
 			}
 		}
+		
+		/// <summary>
+		/// Utility function to print response data to the console.
+		/// </summary>
+		/// <param name="response">
+		/// The TransactionalJobSubmitResponse to be printed.<see cref="TransactionalJobSubmitResponse"/>
+		/// </param>
+		public void PrintResponse(TransactionalJobSubmitResponse response) {
+			PrintResponse(response.Result, response.RequestErrors);
+		}
+		
+		/// <summary>
+		/// Utility function to print response data to the console.
+		/// </summary>
+		/// <param name="response">
+		/// The BulkJobSubmitResponse to be printed.<see cref="BulkJobSubmitResponse"/>
+		/// </param>
+		public void PrintResponse(BulkJobSubmitResponse response) {
+			PrintResponse(response.Result, response.RequestErrors);
+		}
 
 		/// <summary>
 		/// Used to create a file that contains all of the account activity of a certain type for the specified day.
@@ -422,6 +442,22 @@ namespace MessageGears
 				output.Write(buffer, 0, len);
     		}
 			log.Debug("Number of bytes downloaded: " + Convert.ToString(byteCount));
+		}
+		
+		private void PrintResponse(Result result, RequestError[] requestErrors) {
+			if(result == Result.REQUEST_SUCCESSFUL)
+			{
+				Console.WriteLine(Result.REQUEST_SUCCESSFUL.ToString());
+			}
+			else
+			{
+				Console.WriteLine(Result.REQUEST_FAILED.ToString());
+				Console.WriteLine("Number of Errors: " + requestErrors.Length);
+				foreach(RequestError error in requestErrors)
+				{
+					Console.WriteLine(error.ErrorCode + ":" + error.ErrorMessage);
+				}
+			}
 		}
 
 		private String invoke (StringBuilder data)
