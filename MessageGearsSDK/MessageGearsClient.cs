@@ -511,6 +511,7 @@ namespace MessageGears
 		
 		private void appendBaseJobRequest(ref StringBuilder data, JobRequest request)
 		{
+			
 			data.Append ("&TextTemplate=" + HttpUtility.UrlEncode (request.TextTemplate));
 			data.Append ("&FromAddress=" + HttpUtility.UrlEncode (request.FromAddress));
 			data.Append ("&FromName=" + HttpUtility.UrlEncode (request.FromName));
