@@ -352,6 +352,88 @@ namespace MessageGears
 		public void PrintResponse(BulkJobSubmitResponse response) {
 			PrintResponse(response.Result, response.RequestErrors);
 		}
+		
+		/// <summary>
+		/// Utility function to print response data to the console.
+		/// </summary>
+		/// <param name="response">
+		/// The AccountSummaryResponse to be printed.<see cref="AccountSummaryResponse"/>
+		/// </param>
+		public void PrintResponse(AccountSummaryResponse response) {
+			PrintResponse(response.Result, response.RequestErrors);
+			if (response.Result == Result.REQUEST_SUCCESSFUL) {
+				Console.WriteLine("AccountSummary For: " + response.AccountSummary.ActivityDate);
+				Console.WriteLine("Messages: " + response.AccountSummary.Messages);
+				Console.WriteLine("Deliveries: " + response.AccountSummary.Deliveries);
+				Console.WriteLine("Bounces: " + response.AccountSummary.Bounces);
+				Console.WriteLine("Opens: " + response.AccountSummary.Opens);
+				Console.WriteLine("Clicks: " + response.AccountSummary.Clicks);
+				Console.WriteLine("JobErrors: " + response.AccountSummary.JobErrors);
+				Console.WriteLine("RenderErrors: " + response.AccountSummary.RenderErrors);
+				Console.WriteLine("Complaints: " + response.AccountSummary.SpamComplaints);
+				Console.WriteLine("Unsubscribes: " + response.AccountSummary.Unsubscribes);
+			}
+		}
+		
+		/// <summary>
+		/// Utility function to print response data to the console.
+		/// </summary>
+		/// <param name="response">
+		/// The BulkJobSummaryResponse to be printed.<see cref="BulkJobSummaryResponse"/>
+		/// </param>
+		public void PrintResponse(BulkJobSummaryResponse response) {
+			PrintResponse(response.Result, response.RequestErrors);
+			if (response.Result == Result.REQUEST_SUCCESSFUL) {
+				Console.WriteLine("BulkJobSummary For: " + response.BulkJobSummary.BulkJobRequestId);
+				Console.WriteLine("CorrelationId: " + response.BulkJobSummary.CorrelationId);
+				
+				if (response.BulkJobSummary.BulkJobErrors == null) {
+					Console.WriteLine("Messages: " + response.BulkJobSummary.Messages);
+					Console.WriteLine("Deliveries: " + response.BulkJobSummary.Deliveries);
+					Console.WriteLine("Bounces: " + response.BulkJobSummary.Bounces);
+					Console.WriteLine("Opens: " + response.BulkJobSummary.Opens);
+					Console.WriteLine("Clicks: " + response.BulkJobSummary.Clicks);
+					Console.WriteLine("RenderErrors: " + response.BulkJobSummary.RenderErrors);
+					Console.WriteLine("Complaints: " + response.BulkJobSummary.SpamComplaints);
+					Console.WriteLine("Unsubscribes: " + response.BulkJobSummary.Unsubscribes);
+				} else {
+					foreach(BulkJobError error in response.BulkJobSummary.BulkJobErrors) {
+						Console.WriteLine("Error: " + error.ErrorCode + " - " + error.ErrorMessage);
+					}
+				}
+			}
+		}
+		
+				/// <summary>
+		/// Utility function to print response data to the console.
+		/// </summary>
+		/// <param name="response">
+		/// The MessagePreviewResponse to be printed.<see cref="MessagePreviewResponse"/>
+		/// </param>
+		public void PrintResponse(MessagePreviewResponse response) {
+			PrintResponse(response.Result, response.RequestErrors);
+			if (response.Result == Result.REQUEST_SUCCESSFUL) {				
+				if (response.RenderErrors == null) {
+					Console.WriteLine("FromName: " + response.PreviewContent.FromName +
+					                  " <" + response.PreviewContent.FromAddress + ">");
+					Console.WriteLine("OnBehalfOf: " + response.PreviewContent.OnBehalfOfName +
+					                  " <" + response.PreviewContent.OnBehalfOfAddress + ">");
+					Console.WriteLine("ReplyTo: " + response.PreviewContent.ReplyToAddress);
+					Console.WriteLine("Subject: " + response.PreviewContent.SubjectLine);
+					Console.WriteLine("HtmlContent: " + response.PreviewContent.HtmlContent);
+					Console.WriteLine("TextContent: " + response.PreviewContent.TextContent);
+					Console.WriteLine("SpamAssassinReport: " + response.PreviewContent.SpamAssassinReport);
+				} else {
+					foreach(RenderError error in response.RenderErrors) {
+						Console.WriteLine("RenderError: " + error.ErrorCode + " - " + error.ErrorMessage);
+					}
+				}
+			} else {
+				foreach(RequestError error in response.RequestErrors) {
+					Console.WriteLine("RequestError: " + error.ErrorCode + " - " + error.ErrorMessage);
+				}
+			}
+		}
 
 		/// <summary>
 		/// Used to create a file that contains all of the account activity of a certain type for the specified day.
