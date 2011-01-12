@@ -422,7 +422,11 @@ namespace MessageGears
 					Console.WriteLine("Subject: " + response.PreviewContent.SubjectLine);
 					Console.WriteLine("HtmlContent: " + response.PreviewContent.HtmlContent);
 					Console.WriteLine("TextContent: " + response.PreviewContent.TextContent);
-					Console.WriteLine("SpamAssassinReport: " + response.PreviewContent.SpamAssassinReport);
+					Console.WriteLine("SpamAssassinReport:");
+					Console.WriteLine("SpamAssassinScore: " + response.PreviewContent.SpamAssassinReport.Score);
+					foreach(SpamAssassinRule rule in response.PreviewContent.SpamAssassinReport.SpamAssassinRules) {
+						Console.WriteLine(rule.Points + " Points - " + rule.RuleName + " : " + rule.Description);
+					}
 				} else {
 					foreach(RenderError error in response.RenderErrors) {
 						Console.WriteLine("RenderError: " + error.ErrorCode + " - " + error.ErrorMessage);
