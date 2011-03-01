@@ -59,15 +59,11 @@
     <Reference Include="System.Configuration" />
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\log4net.dll</HintPath>
+      <HintPath>..\..\..\lib\log4net.dll</HintPath>
     </Reference>
     <Reference Include="AWSSDK, Version=1.1.0.1, Culture=neutral, PublicKeyToken=cd2d24cd2bace800">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\AWSSDK.dll</HintPath>
-    </Reference>
-    <Reference Include="MessageGearsAwsSDK, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\MessageGearsAwsSDK.dll</HintPath>
+      <HintPath>..\..\..\lib\AWSSDK.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
