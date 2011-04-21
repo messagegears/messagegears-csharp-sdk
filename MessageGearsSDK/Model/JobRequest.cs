@@ -6,7 +6,7 @@ namespace MessageGears.Model
 	/// <summary>
 	/// An abstract class used by several request classes that submit various job requests.
 	/// </summary>
-	public abstract class JobRequest
+	public abstract class JobRequest : BaseJobRequest
 	{
 		private TemplateLanguage _templateLanguage = TemplateLanguage.FREEMARKER;
 		
@@ -53,22 +53,10 @@ namespace MessageGears.Model
 		}
 		
 		/// <summary>
-		/// The Id of the Subaccount to be used to deliver a message.  if no value is supplied the default value defined for your MessageGears account will be used.
-		/// Most customers will not have subaccounts and should never need to used this parameter.
-		/// </summary>
-		public String SubaccountId { get; set; }
-		
-		/// <summary>
 		/// The character set to be used for the message headers and content.  If no value is specified, UTF8 is used.
 		/// </summary>
 		public String CharacterSet { get; set; }
-		
-		/// <summary>
-		/// This value is used to send an email message should a Job Error occur.  It can be very useful in testing but should be used cautiously for transactional messages in a
-		/// high volume account.
-		/// </summary>
-		public String NotificationEmailAddress { get; set; }
-		
+			
 		/// <summary>
 		/// Used to set the reply-to address header.  This address is often set to "do_not_reply@mycompany.com" or "sales@mycompany.com".
 		/// The MessageGears service does not act on messages sent to it as a result of a reply-to and customers should use their own email domain for this value.
@@ -110,13 +98,6 @@ namespace MessageGears.Model
 		/// You must set a CNAME in your DNS that points to www.messagegears.net.  Please test this carefully before using.
 		/// </summary>
 		public String CustomTrackingDomain { get; set; }
-		
-		/// <summary>
-		/// Used to store a user-defined string.  This should be a unique value for each job submitted.
-		/// For bulk jobs, you can retrieve the bulk job summary data by supplying a correlation id to search by.
-		/// This can be very useful if a networking error interrupts a bulk job submission and you are not sure if the job was accepted.
-		/// </summary>
-		public String CorrelationId { get; set; }
 		
 		/// <summary>
 		/// If set to "true", the "List-Unsubscribe" header will be unserted into the messages sent for a job.  This header has special meaning to some ISPs (like GMail).

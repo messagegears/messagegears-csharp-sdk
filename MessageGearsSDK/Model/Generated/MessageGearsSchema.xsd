@@ -61,7 +61,7 @@
             <xsd:sequence>
                 <xsd:element name="Spam" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="Score" type="xsd:double" minOccurs="1" maxOccurs="1" />
-                <xsd:element name="Requried" type="xsd:double" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="Required" type="xsd:double" minOccurs="1" maxOccurs="1" />
                 <xsd:element ref="mg:SpamAssassinRules" minOccurs="0" maxOccurs="1" />
             </xsd:sequence>
         </xsd:complexType>
@@ -95,7 +95,6 @@
     <xsd:element name="BulkJobSummary">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="BulkJobRequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="Messages" type="xsd:integer" minOccurs="1" maxOccurs="1" />
@@ -136,17 +135,17 @@
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
-    <xsd:element name="CreateSubaccountResponse">
+    <xsd:element name="CreateAccountResponse">
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element ref="mg:Result" minOccurs="1" maxOccurs="1" />
                 <xsd:element ref="mg:RequestErrors" minOccurs="0" maxOccurs="1" />
-                <xsd:element ref="mg:Subaccount" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="mg:Account" minOccurs="0" maxOccurs="1" />
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
-    <xsd:element name="UpdateSubaccountResponse">
+    <xsd:element name="UpdateAccountResponse">
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
@@ -155,10 +154,11 @@
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
-    <xsd:element name="Subaccount">
+    <xsd:element name="Account">
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="Id" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="ApiKey" type="xsd:string" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -233,7 +233,6 @@
             <xsd:sequence>
                 <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
-                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="EmailAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
                 <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
@@ -249,7 +248,6 @@
             <xsd:sequence>
                 <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
-                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="EmailAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
                 <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
@@ -267,7 +265,6 @@
             <xsd:sequence>
                 <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
-                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="EmailAddress" type="xsd:string" minOccurs="0" maxOccurs="1" />
                 <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
                 <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
@@ -283,7 +280,6 @@
             <xsd:sequence>
                 <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
-                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="EmailAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
                 <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
@@ -301,7 +297,6 @@
             <xsd:sequence>
                 <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
-                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="EmailAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
                 <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
@@ -316,7 +311,6 @@
             <xsd:sequence>
                 <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
-                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="EmailAddress" type="xsd:string" minOccurs="0" maxOccurs="1" />
                 <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
                 <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
@@ -332,7 +326,6 @@
             <xsd:sequence>
                 <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
-                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="EmailAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
                 <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
@@ -361,7 +354,6 @@
             <xsd:all>
                 <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
                 <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
-                <xsd:element name="SubaccountId" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="Timestamp" type="xsd:dateTime" minOccurs="1" maxOccurs="1" />
                 <xsd:element ref="mg:JobError" minOccurs="0" maxOccurs="1" />
                 <xsd:element name="ActivityId" type="xsd:string" minOccurs="1" maxOccurs="1" />

@@ -49,7 +49,7 @@ namespace MessageGears
 			StringBuilder data = new StringBuilder ();
 			data.Append ("Action=" + HttpUtility.UrlEncode (TransactionalJobSubmitRequest.Action));
 			appendCredentials(ref data);
-			appendBaseJobRequest(ref data, request);
+			appendJobRequest(ref data, request);
 			data.Append ("&RecipientXml=" + HttpUtility.UrlEncode (request.RecipientXml));
 			
 			// invoke endpoint
@@ -72,79 +72,42 @@ namespace MessageGears
 		}
 		
 		/// <summary>
-		/// Used to craete a new subaccount
+		/// Submits a Transactional Campaign (to a single recipient) for processing.
 		/// </summary>
 		/// <param name="request">
-		/// A <see cref="CreateSubaccountRequest"/>
+		/// A <see cref="TransactionalCampaignSubmitRequest"/>
 		/// </param>
 		/// <returns>
-		/// A <see cref="CreateSubaccountResponse"/>
+		/// A <see cref="TransactionalJobSubmitResponse"/>
 		/// </returns>
-		public CreateSubaccountResponse CreateSubaccount (CreateSubaccountRequest request)
+		public TransactionalJobSubmitResponse TransactionalCampaignSubmit (TransactionalCampaignSubmitRequest request)
 		{
 			// build POST data 
 			StringBuilder data = new StringBuilder ();
-			data.Append ("Action=" + HttpUtility.UrlEncode (CreateSubaccountRequest.Action));
+			data.Append ("Action=" + HttpUtility.UrlEncode (TransactionalCampaignSubmitRequest.Action));
 			appendCredentials(ref data);
-			appendBaseSubaccountRequest(ref data, request);
+			appendCampaignRequest(ref data, request);
+			data.Append ("&RecipientXml=" + HttpUtility.UrlEncode (request.RecipientXml));
 			
 			// invoke endpoint
 			string response = invoke (data);
 			
 			// deserialize response into TransactionalJobSubmitResponse
-			XmlSerializer serializer = new XmlSerializer (typeof(CreateSubaccountResponse));
+			XmlSerializer serializer = new XmlSerializer (typeof(TransactionalJobSubmitResponse));
 			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
-				CreateSubaccountResponse objectResponse = (CreateSubaccountResponse)serializer.Deserialize (sr);
+				TransactionalJobSubmitResponse objectResponse = (TransactionalJobSubmitResponse)serializer.Deserialize (sr);
 				if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
 				{
-					log.Info("Create Subaccount successfully processed: " + objectResponse.RequestId);
+					log.Info("Transactional campaign successfully processed: " + objectResponse.RequestId);
 				}
 				else
 				{
-					log.Error("Create Subaccount failed: " + objectResponse.RequestId);
+					log.Error("Transactional campaign failed: " + objectResponse.RequestId);
 				}
 				return objectResponse;
 			}
 		}
 
-		/// <summary>
-		/// Used to update a subaccount
-		/// </summary>
-		/// <param name="request">
-		/// A <see cref="UpdateSubaccountRequest"/>
-		/// </param>
-		/// <returns>
-		/// A <see cref="UpdateSubaccountResponse"/>
-		/// </returns>
-		public UpdateSubaccountResponse UpdateSubaccount (UpdateSubaccountRequest request)
-		{
-			// build POST data 
-			StringBuilder data = new StringBuilder ();
-			data.Append ("Action=" + HttpUtility.UrlEncode (UpdateSubaccountRequest.Action));
-			appendCredentials(ref data);
-			data.Append ("&Id=" + HttpUtility.UrlEncode (request.Id.ToString()));
-			appendBaseSubaccountRequest(ref data, request);
-			
-			// invoke endpoint
-			string response = invoke (data);
-			
-			// deserialize response into TransactionalJobSubmitResponse
-			XmlSerializer serializer = new XmlSerializer (typeof(UpdateSubaccountResponse));
-			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
-				UpdateSubaccountResponse objectResponse = (UpdateSubaccountResponse)serializer.Deserialize (sr);
-				if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
-				{
-					log.Info("Update Subaccount successfully processed: " + objectResponse.RequestId);
-				}
-				else
-				{
-					log.Error("Update Subaccount failed: " + objectResponse.RequestId);
-				}
-				return objectResponse;
-			}
-		}
-		
-		
 		/// <summary>
 		/// Allows you to submit your message content for rendering without actually sending a email message.
 		/// This can be used to build a UI tool to test content as it is being created.  A list of errors will be
@@ -162,7 +125,7 @@ namespace MessageGears
 			StringBuilder data = new StringBuilder ();
 			data.Append ("Action=" + HttpUtility.UrlEncode (MessagePreviewRequest.Action));
 			appendCredentials(ref data);
-			appendBaseJobRequest(ref data, request);
+			appendJobRequest(ref data, request);
 			data.Append ("&RecipientXml=" + HttpUtility.UrlEncode (request.RecipientXml));
 			
 			// invoke endpoint
@@ -202,7 +165,7 @@ namespace MessageGears
 			data.Append ("&RecipientListXmlUrl=" + HttpUtility.UrlEncode (request.RecipientListXmlUrl));
 			data.Append ("&ContextDataXml=" + HttpUtility.UrlEncode (request.ContextDataXml));
 			appendCredentials(ref data);
-			appendBaseJobRequest(ref data, request);
+			appendJobRequest(ref data, request);
 			
 			// invoke endpoint
 			string response = invoke (data);
@@ -218,6 +181,47 @@ namespace MessageGears
 				else
 				{
 					log.Error("Bulk job failed: " + objectResponse.RequestId);
+				}
+				return objectResponse;
+			}
+			
+		}
+		
+		/// <summary>
+		/// Submits a bulk campaign for processing.  A bulk campaign can be used to send a email message to 
+		/// one or more (millions) of recipients.
+		/// </summary>
+		/// <param name="request">
+		/// A <see cref="BulkCampaignSubmitRequest"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="BulkJobSubmitResponse"/>
+		/// </returns>
+		public BulkJobSubmitResponse BulkCampaignSubmit (BulkCampaignSubmitRequest request)
+		{
+		    // build POST data 
+			StringBuilder data = new StringBuilder ();
+			data.Append ("Action=" + HttpUtility.UrlEncode (BulkCampaignSubmitRequest.Action));
+			data.Append ("&RecipientListXmlUrl=" + HttpUtility.UrlEncode (request.RecipientListXmlUrl));
+			appendCredentials(ref data);
+			appendCampaignRequest(ref data, request);
+			
+			Console.WriteLine(request);
+			// invoke endpoint
+			string response = invoke (data);
+			Console.WriteLine(response);
+			
+			// deserialize response into BulkJobSubmitResponse
+			XmlSerializer serializer = new XmlSerializer (typeof(BulkJobSubmitResponse));
+			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
+				BulkJobSubmitResponse objectResponse = (BulkJobSubmitResponse)serializer.Deserialize (sr);
+				if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
+				{
+					log.Info("Bulk campaign successfully processed: " + objectResponse.RequestId);
+				}
+				else
+				{
+					log.Error("Bulk campaign failed: " + objectResponse.RequestId);
 				}
 				return objectResponse;
 			}
@@ -276,43 +280,6 @@ namespace MessageGears
 			data.Append ("Action=" + HttpUtility.UrlEncode ("BulkJobSummary"));
 			appendCredentials(ref data);
 			data.Append("&BulkJobRequestId=" + HttpUtility.UrlEncode (bulkJobRequestId));
-			
-			// invoke endpoint
-			string response = invoke (data);
-			
-			// deserialize response into BulkJobSummaryResponse
-			XmlSerializer serializer = new XmlSerializer (typeof(BulkJobSummaryResponse));
-			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
-				BulkJobSummaryResponse objectResponse = (BulkJobSummaryResponse)serializer.Deserialize (sr);
-				if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
-				{
-					log.Info("Bulk Job Summary successfully processed: " + objectResponse.RequestId);
-				}
-				else
-				{
-					log.Error("Bulk Job Summary failed: " + objectResponse.RequestId);
-				}
-				return objectResponse;
-			}
-		}
-		
-		/// <summary>
-		/// Used to return a summary of the total activity for a bulk job (total clicks, bounces, etc.).
-		/// </summary>
-		/// <param name="request">
-		/// The request object.
-		/// </param>
-		/// <returns>
-		/// A <see cref="BulkJobSummaryResponse"/>
-		/// </returns>
-		public BulkJobSummaryResponse BulkJobSummary(BulkJobSummaryRequest request) 
-		{
-			// build POST data
-			StringBuilder data = new StringBuilder ();
-			data.Append ("Action=" + BulkJobSummaryRequest.Action);
-			appendCredentials(ref data);
-			data.Append("&BulkJobRequestId=" + HttpUtility.UrlEncode (request.BulkJobRequestId));
-			data.Append("&BulkJobCorrelationId=" + HttpUtility.UrlEncode (request.BulkJobCorrelationId));
 			
 			// invoke endpoint
 			string response = invoke (data);
@@ -404,7 +371,7 @@ namespace MessageGears
 			}
 		}
 		
-				/// <summary>
+		/// <summary>
 		/// Utility function to print response data to the console.
 		/// </summary>
 		/// <param name="response">
@@ -586,27 +553,29 @@ namespace MessageGears
 		    data.Append ("&AccountId=" + HttpUtility.UrlEncode (properties.MyMessageGearsAccountId));
 			data.Append ("&ApiKey=" + HttpUtility.UrlEncode (properties.MyMessageGearsApiKey));
 		}
-	
-		private void appendBaseSubaccountRequest(ref StringBuilder data, SubaccountRequest request)
+		
+		private void appendBaseJobRequest(ref StringBuilder data, BaseJobRequest request) 
 		{
-			data.Append ("&Name=" + HttpUtility.UrlEncode (request.Name));
-			data.Append ("&UrlAppend=" + HttpUtility.UrlEncode (request.UrlAppend));
-			data.Append ("&AutoTrack=" + HttpUtility.UrlEncode (request.AutoTrack.ToString()));
-			data.Append ("&CustomTrackingDomain=" + HttpUtility.UrlEncode (request.CustomTrackingDomain));
+			data.Append ("&NotificationEmailAddress=" + HttpUtility.UrlEncode (request.NotificationEmailAddress));
+			data.Append ("&CorrelationId=" + HttpUtility.UrlEncode (request.CorrelationId));
 		}
 		
-		private void appendBaseJobRequest(ref StringBuilder data, JobRequest request)
+		private void appendCampaignRequest(ref StringBuilder data, CampaignRequest request) 
 		{
-			
+			appendBaseJobRequest(ref data, request);
+			data.Append ("&CampaignId=" + HttpUtility.UrlEncode (request.CampaignId));
+		}
+		                               
+		private void appendJobRequest(ref StringBuilder data, JobRequest request)
+		{
+			appendBaseJobRequest(ref data, request);
 			data.Append ("&TextTemplate=" + HttpUtility.UrlEncode (request.TextTemplate));
 			data.Append ("&FromAddress=" + HttpUtility.UrlEncode (request.FromAddress));
 			data.Append ("&FromName=" + HttpUtility.UrlEncode (request.FromName));
 			data.Append ("&SubjectLine=" + HttpUtility.UrlEncode (request.SubjectLine));
 			data.Append ("&HtmlTemplate=" + HttpUtility.UrlEncode (request.HtmlTemplate));
 			data.Append ("&TemplateLanguage=" + HttpUtility.UrlEncode (request.TemplateLanguage.ToString()));
-			data.Append ("&SubaccountId=" + HttpUtility.UrlEncode (request.SubaccountId));
 			data.Append ("&CharacterSet=" + HttpUtility.UrlEncode (request.CharacterSet));
-			data.Append ("&NotificationEmailAddress=" + HttpUtility.UrlEncode (request.NotificationEmailAddress));
 			data.Append ("&ReplyToAddress=" + HttpUtility.UrlEncode (request.ReplyToAddress));
 			data.Append ("&OnBehalfOfAddress=" + HttpUtility.UrlEncode (request.OnBehalfOfAddress));
 			data.Append ("&OnBehalfOfName=" + HttpUtility.UrlEncode (request.OnBehalfOfName));
@@ -614,7 +583,6 @@ namespace MessageGears
 			data.Append ("&UrlAppend=" + HttpUtility.UrlEncode (request.UrlAppend));
 			data.Append ("&CustomTrackingDomain=" + HttpUtility.UrlEncode (request.CustomTrackingDomain));
 			data.Append ("&UnsubscribeHeader=" + HttpUtility.UrlEncode (request.UnsubscribeHeader.ToString()));
-			data.Append ("&CorrelationId=" + HttpUtility.UrlEncode (request.CorrelationId));
 			
 			String attachmentCount;
 			for (int i=0; i < request.attachments.Count; i++)
