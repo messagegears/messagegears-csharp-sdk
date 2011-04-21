@@ -12,10 +12,10 @@ Installation Instructions
 
 2. Create a C# application with the following App.config file:
 
-	<configuration>
-		<configSections>
-			<section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler,Log4net"/>
-		</configSections>
+    <configuration>
+        <configSections>
+            <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler,Log4net"/>
+        </configSections>
 		<log4net>
 			<root>
 				<level value="INFO" />
