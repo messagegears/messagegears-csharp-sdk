@@ -23,7 +23,7 @@ Create a C# application with the following App.config file:
             <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler,Log4net"/>
         </configSections>
         <log4net>
-	    <root>
+            <root>
                 <level value="INFO" />
                 <appender-ref ref="LogFileAppender" />
             </root>
