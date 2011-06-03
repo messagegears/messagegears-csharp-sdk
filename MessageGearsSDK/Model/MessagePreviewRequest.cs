@@ -17,6 +17,12 @@ namespace MessageGears.Model
 		/// </summary>
 		public string RecipientXml { get; set; }
 
+		/// <summary>
+		/// The optional XML data made available to the template code.
+		/// It can used used to store data that is not specific to a recipient such as weekly specials, sales reps, etc.
+		/// When the template is being rendered, this data is available to the code to apply advanced personalization.
+		/// </summary>
+		public string ContextDataXml { get; set; }
 	}
 }
 
