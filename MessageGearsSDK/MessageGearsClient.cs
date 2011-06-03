@@ -127,6 +127,7 @@ namespace MessageGears
 			appendCredentials(ref data);
 			appendJobRequest(ref data, request);
 			data.Append ("&RecipientXml=" + HttpUtility.UrlEncode (request.RecipientXml));
+			data.Append ("&ContextDataXml=" + HttpUtility.UrlEncode (request.ContextDataXml));
 			
 			// invoke endpoint
 			string response = invoke (data);
