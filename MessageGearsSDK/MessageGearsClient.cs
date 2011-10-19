@@ -230,6 +230,45 @@ namespace MessageGears
 		}
 		
 		/// <summary>
+		/// Used to return a summary of total account activity (total clicks, bounces, etc.) for a given month.
+		/// </summary>
+		/// <param name="activityYear">
+		/// A <see cref="String"/> Must be in the form of YYYY.
+		/// </param>
+		/// <param name="activityMonth">
+		/// A <see cref="String"/> Must be in the form of MM (eg "01", "12", etc).
+		/// </param>
+		/// <returns>
+		/// A <see cref="AccountSummaryResponse"/>
+		/// </returns>
+		public AccountSummaryResponse AccountSummary (int activityYear, int activityMonth)
+		{
+			// build POST data 
+			StringBuilder data = new StringBuilder ();
+			data.Append ("Action=" + HttpUtility.UrlEncode ("AccountSummary"));
+			appendCredentials(ref data);
+			data.Append("&ActivityDate=" + HttpUtility.UrlEncode (activityYear.ToString("0000") + "-" + activityMonth.ToString("00")));
+			
+			// invoke endpoint
+			string response = invoke (data);
+			
+			// deserialize response into BulkJobSummaryResponse
+			XmlSerializer serializer = new XmlSerializer (typeof(AccountSummaryResponse));
+			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
+				AccountSummaryResponse objectResponse = (AccountSummaryResponse)serializer.Deserialize (sr);
+				if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
+				{
+					log.Info("Account Summary successfully processed: " + objectResponse.RequestId);
+				}
+				else
+				{
+					log.Error("Account Summary failed: " + objectResponse.RequestId);
+				}
+				return objectResponse;
+			}
+		}
+
+		/// <summary>
 		/// Used to return a summary of total account activity (total clicks, bounces, etc.) for a given day.
 		/// </summary>
 		/// <param name="activityDate">
