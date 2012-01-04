@@ -341,6 +341,43 @@ namespace MessageGears
 		}
 		
 		/// <summary>
+		/// Used to return a summary of the total activity for a bulk job (total clicks, bounces, etc.)
+		/// queried by correlation id.
+		/// </summary>
+		/// <param name="bulkJobCorrelationId">
+		/// The correlation id of the bulk job.
+		/// </param>
+		/// <returns>
+		/// A <see cref="BulkJobSummaryResponse"/>
+		/// </returns>
+		public BulkJobSummaryResponse BulkJobSummaryByCorrelationId(String bulkJobCorrelationId) 
+		{
+			// build POST data 
+			StringBuilder data = new StringBuilder ();
+			data.Append ("Action=" + HttpUtility.UrlEncode ("BulkJobSummary"));
+			appendCredentials(ref data);
+			data.Append("&BulkJobCorrelationId=" + HttpUtility.UrlEncode (bulkJobCorrelationId));
+			
+			// invoke endpoint
+			string response = invoke (data);
+			
+			// deserialize response into BulkJobSummaryResponse
+			XmlSerializer serializer = new XmlSerializer (typeof(BulkJobSummaryResponse));
+			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
+				BulkJobSummaryResponse objectResponse = (BulkJobSummaryResponse)serializer.Deserialize (sr);
+				if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
+				{
+					log.Info("Bulk Job Summary by correlation id successfully processed: " + objectResponse.RequestId);
+				}
+				else
+				{
+					log.Error("Bulk Job Summary by correlation id failed: " + objectResponse.RequestId);
+				}
+				return objectResponse;
+			}
+		}
+		
+		/// <summary>
 		/// Utility function to print response data to the console.
 		/// </summary>
 		/// <param name="response">
