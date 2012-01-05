@@ -33,6 +33,79 @@ namespace MessageGears
 		{
 			this.properties = properties;
 		}
+		
+		/// <summary>
+		/// Used to create a new subaccount
+		/// </summary>
+		/// <param name="request">
+		/// A <see cref="CreateAccountRequest"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="CreateAccountResponse"/>
+		/// </returns>
+		public CreateAccountResponse CreateAccount (CreateAccountRequest request)
+		{
+			// build POST data 
+			StringBuilder data = new StringBuilder ();
+			data.Append ("Action=" + HttpUtility.UrlEncode (CreateAccountRequest.Action));
+			appendCredentials(ref data);
+			appendAccountRequest(ref data, request);
+			
+			// invoke endpoint
+			string response = invoke (data);
+			
+			// deserialize response into CreateAccountResponse
+			XmlSerializer serializer = new XmlSerializer (typeof(CreateAccountResponse));
+			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
+				CreateAccountResponse objectResponse = (CreateAccountResponse)serializer.Deserialize (sr);
+				if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
+				{
+					log.Info("Create account successfully processed: " + objectResponse.RequestId);
+				}
+				else
+				{
+					log.Error("Create account failed: " + objectResponse.RequestId);
+				}
+				return objectResponse;
+			}
+		}
+		
+		/// <summary>
+		/// Used to update a subaccount
+		/// </summary>
+		/// <param name="request">
+		/// A <see cref="UpdateAccountRequest"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="UpdateAccountResponse"/>
+		/// </returns>
+		public UpdateAccountResponse UpdateAccount (UpdateAccountRequest request)
+		{
+			// build POST data 
+			StringBuilder data = new StringBuilder ();
+			data.Append ("Action=" + HttpUtility.UrlEncode (UpdateAccountRequest.Action));
+			appendCredentials(ref data);
+			appendAccountRequest(ref data, request);
+			data.Append ("&Id=" + HttpUtility.UrlEncode (request.Id));
+
+			// invoke endpoint
+			string response = invoke (data);
+			
+			// deserialize response into UpdateAccountResponse
+			XmlSerializer serializer = new XmlSerializer (typeof(UpdateAccountResponse));
+			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
+				UpdateAccountResponse objectResponse = (UpdateAccountResponse)serializer.Deserialize (sr);
+				if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
+				{
+					log.Info("Update account successfully processed: " + objectResponse.RequestId);
+				}
+				else
+				{
+					log.Error("Update account failed: " + objectResponse.RequestId);
+				}
+				return objectResponse;
+			}
+		}
 				
 		/// <summary>
 		/// Submits a Transactional Job (to a single recipient) for processing.
@@ -391,6 +464,30 @@ namespace MessageGears
 		/// Utility function to print response data to the console.
 		/// </summary>
 		/// <param name="response">
+		/// The CreateAccountResponse to be printed.<see cref="CreateAccountResponse"/>
+		/// </param>
+		public void PrintResponse(CreateAccountResponse response) {
+			PrintResponse(response.Result, response.RequestErrors);
+			if(response.Result.Equals(Result.REQUEST_SUCCESSFUL)) {
+				Console.WriteLine("Account Id: " + response.Account.Id);
+				Console.WriteLine("Account API Key: " + response.Account.ApiKey);
+			}
+		}
+
+		/// <summary>
+		/// Utility function to print response data to the console.
+		/// </summary>
+		/// <param name="response">
+		/// The UpdateAccountResponse to be printed.<see cref="UpdateAccountResponse"/>
+		/// </param>
+		public void PrintResponse(UpdateAccountResponse response) {
+			PrintResponse(response.Result, response.RequestErrors);
+		}
+
+		/// <summary>
+		/// Utility function to print response data to the console.
+		/// </summary>
+		/// <param name="response">
 		/// The BulkJobSubmitResponse to be printed.<see cref="BulkJobSubmitResponse"/>
 		/// </param>
 		public void PrintResponse(BulkJobSubmitResponse response) {
@@ -637,6 +734,14 @@ namespace MessageGears
 			data.Append ("&CorrelationId=" + HttpUtility.UrlEncode (request.CorrelationId));
 		}
 		
+		private void appendAccountRequest(ref StringBuilder data, AccountRequest request) 
+		{
+			data.Append ("&Name=" + HttpUtility.UrlEncode (request.Name));
+			data.Append ("&AutoTrack=" + HttpUtility.UrlEncode (request.AutoTrack.ToString()));
+			data.Append ("&CustomTrackingDomain=" + HttpUtility.UrlEncode (request.CustomTrackingDomain));
+			data.Append ("&UrlAppend=" + HttpUtility.UrlEncode (request.UrlAppend));
+		}
+
 		private void appendCampaignRequest(ref StringBuilder data, CampaignRequest request) 
 		{
 			appendBaseJobRequest(ref data, request);

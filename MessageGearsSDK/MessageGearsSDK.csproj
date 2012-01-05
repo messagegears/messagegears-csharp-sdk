@@ -70,10 +70,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="AWSSDK">
-      <HintPath>..\..\..\Desktop\messagegears-csharp-sdk-3_1_2\lib\AWSSDK.dll</HintPath>
+      <HintPath>..\..\..\Desktop\AWSSDK.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>..\..\..\Desktop\messagegears-csharp-sdk-3_1_2\lib\log4net.dll</HintPath>
+      <HintPath>..\..\..\Desktop\log4net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +95,9 @@
     <Compile Include="Model\BaseJobRequest.cs" />
     <Compile Include="Model\TransactionalCampaignSubmitRequest.cs" />
     <Compile Include="Model\BulkCampaignSubmitRequest.cs" />
+    <Compile Include="Model\AccountRequest.cs" />
+    <Compile Include="Model\CreateAccountRequest.cs" />
+    <Compile Include="Model\UpdateAccountRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
