@@ -35,6 +35,45 @@ namespace MessageGears
 		}
 		
 		/// <summary>
+		/// Used to create a Thumbnail Image
+		/// </summary>
+		/// <param name="request">
+		/// A <see cref="ThumbnailRequest"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="ThumbnailResponse"/>
+		/// </returns>
+		public ThumbnailResponse Thumbnail (ThumbnailRequest request)
+		{
+			// build POST data 
+			StringBuilder data = new StringBuilder ();
+			data.Append ("Action=" + HttpUtility.UrlEncode (ThumbnailRequest.Action));
+			appendCredentials(ref data);
+			data.Append ("&ImageId=" + HttpUtility.UrlEncode (request.ImageId));
+			data.Append ("&ImageSize=" + HttpUtility.UrlEncode (request.ThumbnailSize.ToString()));
+			data.Append ("&Content=" + HttpUtility.UrlEncode (request.Content));
+			
+			// invoke endpoint
+			string response = invoke (data);
+			
+			// deserialize response into ThumbnailResponse
+			XmlSerializer serializer = new XmlSerializer (typeof(ThumbnailResponse));
+			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
+				ThumbnailResponse objectResponse = (ThumbnailResponse)serializer.Deserialize (sr);
+				if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
+				{
+					log.Info("Thumbnail request successfully processed.  Image is available at: " + objectResponse.imageUrl);
+				}
+				else
+				{
+					log.Error("Thumbnail request failed: " + objectResponse.RequestId);
+				}
+				return objectResponse;
+			}
+		}
+
+		
+		/// <summary>
 		/// Used to create a new subaccount
 		/// </summary>
 		/// <param name="request">
@@ -494,6 +533,19 @@ namespace MessageGears
 			PrintResponse(response.Result, response.RequestErrors);
 		}
 		
+		/// <summary>
+		/// Utility function to print response data to the console.
+		/// </summary>
+		/// <param name="response">
+		/// The ThumbnailResponse to be printed.<see cref="ThumbnailResponse"/>
+		/// </param>
+		public void PrintResponse(ThumbnailResponse response) {
+			PrintResponse(response.Result, response.RequestErrors);
+			if(response.Result.Equals(Result.REQUEST_SUCCESSFUL)) {
+				Console.WriteLine("Thumbnail URL: " + response.imageUrl);
+			}
+		}
+
 		/// <summary>
 		/// Utility function to print response data to the console.
 		/// </summary>

@@ -9,7 +9,6 @@
     <OutputType>Library</OutputType>
     <RootNamespace>MessageGearsSDK</RootNamespace>
     <AssemblyName>MessageGearsSDK</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -98,6 +97,8 @@
     <Compile Include="Model\AccountRequest.cs" />
     <Compile Include="Model\CreateAccountRequest.cs" />
     <Compile Include="Model\UpdateAccountRequest.cs" />
+    <Compile Include="Model\ThumbnailRequest.cs" />
+    <Compile Include="Model\ThumbnailSize.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
