@@ -97,7 +97,7 @@ namespace MessageGears
 					}
 					break;
 				case XmlNodeType.Text:
-					xml = xml + reader.Value;
+					xml = xml + System.Security.SecurityElement.Escape(reader.Value);
 					break;
 				case XmlNodeType. EndElement:
 					endElementType = reader.Name;
