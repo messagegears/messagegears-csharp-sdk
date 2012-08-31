@@ -594,7 +594,15 @@ namespace MessageGears
 		/// </returns>
 		public String AccountActivity(DateTime activityDate, ActivityType activityType)
 		{
-			DateTime start = DateTime.Now;
+			DateTime now = DateTime.Now;
+			// validate that activityDate is not in the future
+			if(activityDate > now) 
+			{
+				log.Info("Activity Date cannot be in the future. ActivityDate: " + activityDate + " Date Now: " + now);
+				throw new MessageGearsClientException("Parmameter: ActivityDate. Value: " + activityDate + " Error Message: This field cannot be a date in the future.");
+			}
+
+			DateTime start = now;
 			String fileName = properties.DownloadDirectory + activityDate.Year + "-" + activityDate.Month + "-" + activityDate.Day + "_" + activityType + ".xml";
 			// build POST data 
 			StringBuilder data = new StringBuilder ();
@@ -603,8 +611,8 @@ namespace MessageGears
 			data.Append("&ActivityDate=" + HttpUtility.UrlEncode (activityDate.Year + "-" + activityDate.Month + "-" + activityDate.Day));
 			data.Append ("&ActivityType=" + HttpUtility.UrlEncode (activityType.ToString()));
 			
-			// invoke endpoint
-			invoke (data, fileName);
+			// invoke endpoint - either writing the contents to a temporary file or throwing exception if error are encountered
+			invokeAccountActivity(data, fileName);
 			TimeSpan ts = DateTime.Now - start;
 			FileInfo fi = new FileInfo(fileName);
 			long mbyte = 1024 * 1024;
@@ -623,9 +631,8 @@ namespace MessageGears
 			return fileName;
 		}
 		
-		private void invoke (StringBuilder data, String fileName)
+		private void invokeAccountActivity (StringBuilder data, String fileName)
 		{
-			
 			Uri address = new Uri (properties.MessageGearsEndPoint);
 			
 			// Create the web request  
@@ -650,7 +657,34 @@ namespace MessageGears
 			
 			// Get response  
 			using (HttpWebResponse response = request.GetResponse () as HttpWebResponse) {
-				// Get the response stream  
+				string contentDisposition = response.GetResponseHeader("Content-Disposition");
+				log.Debug("AccountActivityReponse header Content-Disposition: " + contentDisposition);
+
+				// check for Content-Disposition header - if not set assume file was not returned
+				if(contentDisposition.Length == 0) 
+				{
+					log.Info("Content-Disposition header not set. Assuming AccountActivity file not returned.");
+  					StreamReader reader = new StreamReader (response.GetResponseStream ());
+					// read the entire response as a string since it should be an XML response in the absence of the Content-Disposition header
+					string responseText = reader.ReadToEnd ();
+
+					// deserialize response into AccountActivityResponse
+					XmlSerializer serializer = new XmlSerializer (typeof(AccountActivityResponse));
+					using (XmlTextReader sr = new XmlTextReader (new StringReader (responseText))) {
+						AccountActivityResponse objectResponse = (AccountActivityResponse)serializer.Deserialize (sr);
+
+						// append errors and throw exception with errors as the message
+						StringBuilder builder = new StringBuilder();
+						foreach(RequestError error in objectResponse.RequestErrors)
+						{
+							builder.Append(error.ErrorMessage);
+						}
+						throw new MessageGearsClientException(builder.ToString());
+					}
+						
+				}
+
+				// otherwise, Get the response stream  
 				using (Stream file = File.OpenWrite(fileName))
 				{
     				CopyStream(response.GetResponseStream (), file);

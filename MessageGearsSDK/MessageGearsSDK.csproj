@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C3C0BC96-01F3-467E-B527-58AEA6AA8940}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>MessageGearsSDK</RootNamespace>
     <AssemblyName>MessageGearsSDK</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -29,6 +28,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -70,34 +70,38 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="AWSSDK">
-      <HintPath>..\..\..\Desktop\AWSSDK.dll</HintPath>
+      <HintPath>..\..\lib\new\AWSSDK.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>..\..\..\Desktop\log4net.dll</HintPath>
+      <HintPath>..\..\lib\log4net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MessageGearsClient.cs" />
-    <Compile Include="Model\TemplateLanguage.cs" />
-    <Compile Include="Model\JobRequest.cs" />
-    <Compile Include="Model\Generated\MessageGearsSchema.cs" />
-    <Compile Include="Model\BulkJobSubmitRequest.cs" />
-    <Compile Include="Model\TransactionalJobSubmitRequest.cs" />
-    <Compile Include="Model\MessagePreviewRequest.cs" />
-    <Compile Include="Model\Attachment.cs" />
-    <Compile Include="MessageGearsActivityFileProcessor.cs" />
-    <Compile Include="MessageGearsProperties.cs" />
-    <Compile Include="MessageGearsListener.cs" />
-    <Compile Include="Model\ActivityType.cs" />
-    <Compile Include="Model\BulkJobSummaryRequest.cs" />
-    <Compile Include="Model\Header.cs" />
-    <Compile Include="Model\CampaignRequest.cs" />
-    <Compile Include="Model\BaseJobRequest.cs" />
-    <Compile Include="Model\TransactionalCampaignSubmitRequest.cs" />
-    <Compile Include="Model\BulkCampaignSubmitRequest.cs" />
-    <Compile Include="Model\AccountRequest.cs" />
-    <Compile Include="Model\CreateAccountRequest.cs" />
-    <Compile Include="Model\UpdateAccountRequest.cs" />
+    <Compile Include="MessageGears\Model\TemplateLanguage.cs" />
+    <Compile Include="MessageGears\Model\JobRequest.cs" />
+    <Compile Include="MessageGears\Model\Generated\MessageGearsSchema.cs" />
+    <Compile Include="MessageGears\Model\BulkJobSubmitRequest.cs" />
+    <Compile Include="MessageGears\Model\TransactionalJobSubmitRequest.cs" />
+    <Compile Include="MessageGears\Model\MessagePreviewRequest.cs" />
+    <Compile Include="MessageGears\Model\Attachment.cs" />
+    <Compile Include="MessageGears\Model\ActivityType.cs" />
+    <Compile Include="MessageGears\Model\BulkJobSummaryRequest.cs" />
+    <Compile Include="MessageGears\Model\Header.cs" />
+    <Compile Include="MessageGears\Model\CampaignRequest.cs" />
+    <Compile Include="MessageGears\Model\BaseJobRequest.cs" />
+    <Compile Include="MessageGears\Model\TransactionalCampaignSubmitRequest.cs" />
+    <Compile Include="MessageGears\Model\BulkCampaignSubmitRequest.cs" />
+    <Compile Include="MessageGears\Model\AccountRequest.cs" />
+    <Compile Include="MessageGears\Model\CreateAccountRequest.cs" />
+    <Compile Include="MessageGears\Model\UpdateAccountRequest.cs" />
+    <Compile Include="MessageGears\EventQueue\MessageGearsAwsClient.cs" />
+    <Compile Include="MessageGears\EventQueue\MessageGearsAwsProperties.cs" />
+    <Compile Include="MessageGears\EventQueue\MessageGearsAwsQueuePoller.cs" />
+    <Compile Include="MessageGears\MessageGearsActivityFileProcessor.cs" />
+    <Compile Include="MessageGears\MessageGearsClient.cs" />
+    <Compile Include="MessageGears\MessageGearsListener.cs" />
+    <Compile Include="MessageGears\MessageGearsProperties.cs" />
+    <Compile Include="MessageGears\MessageGearsClientException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -123,6 +127,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Model\Generated\MessageGearsSchema.xsd" />
+    <None Include="MessageGears\Model\Generated\MessageGearsSchema.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MessageGears\" />
+    <Folder Include="MessageGears\EventQueue\" />
   </ItemGroup>
 </Project>
