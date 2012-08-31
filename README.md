@@ -1,7 +1,7 @@
 MessageGears C# SDK
 ===================
 
-This library is a comprehensive wrapper around the MessaegGears Web Services APIs.  It also provides a Amazon SQS message consumer for those customers who subscribe to the real-time event feed service.  It also provides a streaming XML parser for downloading and processing the daily account activity files.
+This library is a comprehensive wrapper around the MessaegGears Web Services APIs.  It also provides a Amazon SQS message consumer for those customers who subscribe to the real-time event feed service and a streaming XML parser for downloading and processing the daily account activity files.
 
 Installation Instructions
 -------------------------
@@ -14,9 +14,11 @@ Click the download link above and retrieve the 3 libraries to be referenced by y
    * log4net.dll
    * MessageGearsSDK.dll
 
-### Create 
+### Logging Configuration 
 
-Create a C# application with the following App.config file:
+The MessageGears SDK utilizes log4net to provide application logging. 
+
+To enable logging for the MessageGears SDK add the following to your applications App.config file:
 
     <configuration>
         <configSections>
@@ -41,5 +43,4 @@ Create a C# application with the following App.config file:
 
 #### More Examples
 
-Refer to the example application to build your application: https://github.com/messagegears/messagegears-csharp-examples
-
+Examples are provided for each API endpoint. See http://messagegears.com/docs/web-services/ for more information.
