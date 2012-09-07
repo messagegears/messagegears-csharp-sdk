@@ -238,6 +238,15 @@ namespace MessageGears
 			data.Append ("Action=" + HttpUtility.UrlEncode (BulkJobSubmitRequest.Action));
 			data.Append ("&RecipientListXmlUrl=" + HttpUtility.UrlEncode (request.RecipientListXmlUrl));
 			data.Append ("&ContextDataXml=" + HttpUtility.UrlEncode (request.ContextDataXml));
+
+			// add optional templates via URL if set
+			if (!String.IsNullOrEmpty (request.HtmlTemplateUrl)) {
+				data.Append ("&HtmlTemplateUrl=" + HttpUtility.UrlEncode (request.HtmlTemplateUrl));
+			}
+			if (!String.IsNullOrEmpty (request.TextTemplateUrl)) {
+				data.Append ("&TextTemplateUrl=" + HttpUtility.UrlEncode (request.TextTemplateUrl));
+			}
+
 			appendCredentials(ref data);
 			appendJobRequest(ref data, request);
 			
@@ -784,14 +793,27 @@ namespace MessageGears
 		                               
 		private void appendJobRequest(ref StringBuilder data, JobRequest request)
 		{
-			appendBaseJobRequest(ref data, request);
-			data.Append ("&TextTemplate=" + HttpUtility.UrlEncode (request.TextTemplate));
+			appendBaseJobRequest (ref data, request);
+
+			// optionallly set text and html template if supplied. otherwise, assume they are supplied as urls instead of inline
+			if (!String.IsNullOrEmpty (request.TextTemplate)) {
+				data.Append ("&TextTemplate=" + HttpUtility.UrlEncode (request.TextTemplate));
+			}
+			if (!String.IsNullOrEmpty (request.HtmlTemplate)) {
+				data.Append ("&HtmlTemplate=" + HttpUtility.UrlEncode (request.HtmlTemplate));
+			}
+
+			// if CharacterSet not specified then default to UTF-8
+			if (!String.IsNullOrEmpty (request.CharacterSet)) {
+				data.Append ("&CharacterSet=" + HttpUtility.UrlEncode (request.CharacterSet));
+			} else {
+				data.Append ("&CharacterSet=UTF-8");
+			}
+
 			data.Append ("&FromAddress=" + HttpUtility.UrlEncode (request.FromAddress));
 			data.Append ("&FromName=" + HttpUtility.UrlEncode (request.FromName));
 			data.Append ("&SubjectLine=" + HttpUtility.UrlEncode (request.SubjectLine));
-			data.Append ("&HtmlTemplate=" + HttpUtility.UrlEncode (request.HtmlTemplate));
 			data.Append ("&TemplateLanguage=" + HttpUtility.UrlEncode (request.TemplateLanguage.ToString()));
-			data.Append ("&CharacterSet=" + HttpUtility.UrlEncode (request.CharacterSet));
 			data.Append ("&ReplyToAddress=" + HttpUtility.UrlEncode (request.ReplyToAddress));
 			data.Append ("&OnBehalfOfAddress=" + HttpUtility.UrlEncode (request.OnBehalfOfAddress));
 			data.Append ("&OnBehalfOfName=" + HttpUtility.UrlEncode (request.OnBehalfOfName));

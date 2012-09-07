@@ -19,7 +19,23 @@ namespace MessageGears.Model
 		/// See the MessageGears online API docs for more information.
 		/// </summary>
 		public string RecipientListXmlUrl { get; set; }
-		
+
+		/// <summary>
+		/// Gets or sets the html template URL.
+		/// </summary>
+		/// <value>
+		/// The html template URL.
+		/// </value>
+		public string HtmlTemplateUrl { get; set; }
+
+		/// <summary>
+		/// Gets or sets the text template URL.
+		/// </summary>
+		/// <value>
+		/// The text template URL.
+		/// </value>
+		public string TextTemplateUrl { get; set; }
+
 		/// <summary>
 		/// The optional XML data made available to the template code.
 		/// It can used used to store data that is not specific to a recipient such as weekly specials, sales reps, etc.
