@@ -612,7 +612,7 @@ namespace MessageGears
 			}
 
 			DateTime start = now;
-			String fileName = properties.DownloadDirectory + activityDate.Year + "-" + activityDate.Month + "-" + activityDate.Day + "_" + activityType + ".xml";
+			String fileName = properties.DownloadDirectory + activityDate.Year + "-" + activityDate.Month + "-" + activityDate.Day + "_" + activityType + "_" + properties.MyMessageGearsAccountId + ".xml";
 			// build POST data 
 			StringBuilder data = new StringBuilder ();
 			data.Append ("Action=" + HttpUtility.UrlEncode ("AccountActivity"));
