@@ -33,7 +33,39 @@ namespace MessageGears
 		{
 			this.properties = properties;
 		}
-		
+
+		/// <summary>
+		/// Thumbnail the specified request.
+		/// </summary>
+		/// <param name='request'>
+		/// Request.
+		/// </param>
+		public ThumbnailResponse Thumbnail (ThumbnailRequest request)
+		{
+			// build POST data 
+			StringBuilder data = new StringBuilder ();
+			data.Append ("Action=" + HttpUtility.UrlEncode (ThumbnailRequest.Action));
+			appendCredentials (ref data);
+			data.Append ("&Content=" + HttpUtility.UrlEncode (request.Content));
+			data.Append ("&ImageId=" + HttpUtility.UrlEncode (request.ImageId));
+			data.Append ("&ImageSize=" + HttpUtility.UrlEncode (request.ThumbnailSize.ToString()));
+
+			// invoke endpoint
+			string response = invoke (data);
+			
+			// deserialize response into CreateAccountResponse
+			XmlSerializer serializer = new XmlSerializer (typeof(ThumbnailResponse));
+			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
+				ThumbnailResponse objectResponse = (ThumbnailResponse)serializer.Deserialize (sr);
+				if (objectResponse.Result.Equals (Result.REQUEST_SUCCESSFUL)) {
+					log.Info ("Thumbnail successfully processed: " + objectResponse.RequestId);
+				} else {
+					log.Error ("Thumbnail failed: " + objectResponse.RequestId);
+				}
+				return objectResponse;
+			}
+		}
+
 		/// <summary>
 		/// Used to create a new subaccount
 		/// </summary>
@@ -458,7 +490,19 @@ namespace MessageGears
 				return objectResponse;
 			}
 		}
-		
+		/// <summary>
+		/// Utility function to print response data to the console.
+		/// </summary>
+		/// <param name="response">
+		/// The ThumbnailResponse to be printed.<see cref="ThumbnailResponse"/>
+		/// </param>
+		public void PrintResponse(ThumbnailResponse response) {
+			PrintResponse(response.Result, response.RequestErrors);
+			if(response.Result.Equals(Result.REQUEST_SUCCESSFUL)) {
+				Console.WriteLine("Account Id: " + response.imageUrl);
+			}
+		}
+
 		/// <summary>
 		/// Utility function to print response data to the console.
 		/// </summary>

@@ -21,13 +21,15 @@ namespace MessageGears.Model.Generated {
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://messagegears.com/3.1/webService")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=false)]
-    public partial class TransactionalJobSubmitResponse {
+    public partial class ThumbnailResponse {
         
         private string requestIdField;
         
         private Result resultField;
         
         private RequestError[] requestErrorsField;
+        
+        private string imageUrlField;
         
         /// <remarks/>
         public string RequestId {
@@ -57,6 +59,16 @@ namespace MessageGears.Model.Generated {
             }
             set {
                 this.requestErrorsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string imageUrl {
+            get {
+                return this.imageUrlField;
+            }
+            set {
+                this.imageUrlField = value;
             }
         }
     }
@@ -116,7 +128,7 @@ namespace MessageGears.Model.Generated {
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://messagegears.com/3.1/webService")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=false)]
-    public partial class BulkJobSubmitResponse {
+    public partial class TransactionalJobSubmitResponse {
         
         private string requestIdField1;
         
@@ -163,19 +175,13 @@ namespace MessageGears.Model.Generated {
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://messagegears.com/3.1/webService")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=false)]
-    public partial class AccountActivityResponse {
+    public partial class BulkJobSubmitResponse {
         
         private string requestIdField2;
         
         private Result resultField2;
         
-        private System.DateTime activityDateField;
-        
-        private bool activityDateSpecifiedField;
-        
         private RequestError[] requestErrorsField2;
-        
-        private ActivityItems activityItemsField;
         
         /// <remarks/>
         public string RequestId {
@@ -194,6 +200,59 @@ namespace MessageGears.Model.Generated {
             }
             set {
                 this.resultField2 = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItem(IsNullable=false)]
+        public RequestError[] RequestErrors {
+            get {
+                return this.requestErrorsField2;
+            }
+            set {
+                this.requestErrorsField2 = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://messagegears.com/3.1/webService")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=false)]
+    public partial class AccountActivityResponse {
+        
+        private string requestIdField3;
+        
+        private Result resultField3;
+        
+        private System.DateTime activityDateField;
+        
+        private bool activityDateSpecifiedField;
+        
+        private RequestError[] requestErrorsField3;
+        
+        private ActivityItems activityItemsField;
+        
+        /// <remarks/>
+        public string RequestId {
+            get {
+                return this.requestIdField3;
+            }
+            set {
+                this.requestIdField3 = value;
+            }
+        }
+        
+        /// <remarks/>
+        public Result Result {
+            get {
+                return this.resultField3;
+            }
+            set {
+                this.resultField3 = value;
             }
         }
         
@@ -223,10 +282,10 @@ namespace MessageGears.Model.Generated {
         [System.Xml.Serialization.XmlArrayItem(IsNullable=false)]
         public RequestError[] RequestErrors {
             get {
-                return this.requestErrorsField2;
+                return this.requestErrorsField3;
             }
             set {
-                this.requestErrorsField2 = value;
+                this.requestErrorsField3 = value;
             }
         }
         
@@ -364,7 +423,7 @@ namespace MessageGears.Model.Generated {
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=true)]
     public partial class OpenActivity {
         
-        private string requestIdField3;
+        private string requestIdField4;
         
         private string correlationIdField;
         
@@ -387,10 +446,10 @@ namespace MessageGears.Model.Generated {
         /// <remarks/>
         public string RequestId {
             get {
-                return this.requestIdField3;
+                return this.requestIdField4;
             }
             set {
-                this.requestIdField3 = value;
+                this.requestIdField4 = value;
             }
         }
         
@@ -495,7 +554,7 @@ namespace MessageGears.Model.Generated {
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=true)]
     public partial class ClickActivity {
         
-        private string requestIdField4;
+        private string requestIdField5;
         
         private string correlationIdField1;
         
@@ -522,10 +581,10 @@ namespace MessageGears.Model.Generated {
         /// <remarks/>
         public string RequestId {
             get {
-                return this.requestIdField4;
+                return this.requestIdField5;
             }
             set {
-                this.requestIdField4 = value;
+                this.requestIdField5 = value;
             }
         }
         
@@ -650,7 +709,7 @@ namespace MessageGears.Model.Generated {
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=true)]
     public partial class UnsubActivity {
         
-        private string requestIdField5;
+        private string requestIdField6;
         
         private string correlationIdField2;
         
@@ -673,10 +732,10 @@ namespace MessageGears.Model.Generated {
         /// <remarks/>
         public string RequestId {
             get {
-                return this.requestIdField5;
+                return this.requestIdField6;
             }
             set {
-                this.requestIdField5 = value;
+                this.requestIdField6 = value;
             }
         }
         
@@ -781,7 +840,7 @@ namespace MessageGears.Model.Generated {
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=true)]
     public partial class BouncedMessageActivity {
         
-        private string requestIdField6;
+        private string requestIdField7;
         
         private string correlationIdField3;
         
@@ -806,10 +865,10 @@ namespace MessageGears.Model.Generated {
         /// <remarks/>
         public string RequestId {
             get {
-                return this.requestIdField6;
+                return this.requestIdField7;
             }
             set {
-                this.requestIdField6 = value;
+                this.requestIdField7 = value;
             }
         }
         
@@ -925,7 +984,7 @@ namespace MessageGears.Model.Generated {
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=true)]
     public partial class DeliveredMessageActivity {
         
-        private string requestIdField7;
+        private string requestIdField8;
         
         private string correlationIdField4;
         
@@ -944,10 +1003,10 @@ namespace MessageGears.Model.Generated {
         /// <remarks/>
         public string RequestId {
             get {
-                return this.requestIdField7;
+                return this.requestIdField8;
             }
             set {
-                this.requestIdField7 = value;
+                this.requestIdField8 = value;
             }
         }
         
@@ -1032,7 +1091,7 @@ namespace MessageGears.Model.Generated {
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=true)]
     public partial class SpamComplaintActivity {
         
-        private string requestIdField8;
+        private string requestIdField9;
         
         private string correlationIdField5;
         
@@ -1053,10 +1112,10 @@ namespace MessageGears.Model.Generated {
         /// <remarks/>
         public string RequestId {
             get {
-                return this.requestIdField8;
+                return this.requestIdField9;
             }
             set {
-                this.requestIdField8 = value;
+                this.requestIdField9 = value;
             }
         }
         
@@ -1150,7 +1209,7 @@ namespace MessageGears.Model.Generated {
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=true)]
     public partial class RenderErrorActivity {
         
-        private string requestIdField9;
+        private string requestIdField10;
         
         private string correlationIdField6;
         
@@ -1167,10 +1226,10 @@ namespace MessageGears.Model.Generated {
         /// <remarks/>
         public string RequestId {
             get {
-                return this.requestIdField9;
+                return this.requestIdField10;
             }
             set {
-                this.requestIdField9 = value;
+                this.requestIdField10 = value;
             }
         }
         
@@ -1279,7 +1338,7 @@ namespace MessageGears.Model.Generated {
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=true)]
     public partial class JobErrorActivity {
         
-        private string requestIdField10;
+        private string requestIdField11;
         
         private string correlationIdField7;
         
@@ -1292,10 +1351,10 @@ namespace MessageGears.Model.Generated {
         /// <remarks/>
         public string RequestId {
             get {
-                return this.requestIdField10;
+                return this.requestIdField11;
             }
             set {
-                this.requestIdField10 = value;
+                this.requestIdField11 = value;
             }
         }
         
@@ -1383,11 +1442,11 @@ namespace MessageGears.Model.Generated {
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=false)]
     public partial class MessagePreviewResponse {
         
-        private string requestIdField11;
+        private string requestIdField12;
         
-        private Result resultField3;
+        private Result resultField4;
         
-        private RequestError[] requestErrorsField3;
+        private RequestError[] requestErrorsField4;
         
         private RenderError[] renderErrorsField1;
         
@@ -1396,20 +1455,20 @@ namespace MessageGears.Model.Generated {
         /// <remarks/>
         public string RequestId {
             get {
-                return this.requestIdField11;
+                return this.requestIdField12;
             }
             set {
-                this.requestIdField11 = value;
+                this.requestIdField12 = value;
             }
         }
         
         /// <remarks/>
         public Result Result {
             get {
-                return this.resultField3;
+                return this.resultField4;
             }
             set {
-                this.resultField3 = value;
+                this.resultField4 = value;
             }
         }
         
@@ -1417,10 +1476,10 @@ namespace MessageGears.Model.Generated {
         [System.Xml.Serialization.XmlArrayItem(IsNullable=false)]
         public RequestError[] RequestErrors {
             get {
-                return this.requestErrorsField3;
+                return this.requestErrorsField4;
             }
             set {
-                this.requestErrorsField3 = value;
+                this.requestErrorsField4 = value;
             }
         }
         
@@ -1678,31 +1737,31 @@ namespace MessageGears.Model.Generated {
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=false)]
     public partial class BulkJobSummaryResponse {
         
-        private string requestIdField12;
+        private string requestIdField13;
         
-        private Result resultField4;
+        private Result resultField5;
         
-        private RequestError[] requestErrorsField4;
+        private RequestError[] requestErrorsField5;
         
         private BulkJobSummary bulkJobSummaryField;
         
         /// <remarks/>
         public string RequestId {
             get {
-                return this.requestIdField12;
+                return this.requestIdField13;
             }
             set {
-                this.requestIdField12 = value;
+                this.requestIdField13 = value;
             }
         }
         
         /// <remarks/>
         public Result Result {
             get {
-                return this.resultField4;
+                return this.resultField5;
             }
             set {
-                this.resultField4 = value;
+                this.resultField5 = value;
             }
         }
         
@@ -1710,10 +1769,10 @@ namespace MessageGears.Model.Generated {
         [System.Xml.Serialization.XmlArrayItem(IsNullable=false)]
         public RequestError[] RequestErrors {
             get {
-                return this.requestErrorsField4;
+                return this.requestErrorsField5;
             }
             set {
-                this.requestErrorsField4 = value;
+                this.requestErrorsField5 = value;
             }
         }
         
@@ -1922,31 +1981,31 @@ namespace MessageGears.Model.Generated {
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=false)]
     public partial class AccountSummaryResponse {
         
-        private string requestIdField13;
+        private string requestIdField14;
         
-        private Result resultField5;
+        private Result resultField6;
         
-        private RequestError[] requestErrorsField5;
+        private RequestError[] requestErrorsField6;
         
         private AccountSummary accountSummaryField;
         
         /// <remarks/>
         public string RequestId {
             get {
-                return this.requestIdField13;
+                return this.requestIdField14;
             }
             set {
-                this.requestIdField13 = value;
+                this.requestIdField14 = value;
             }
         }
         
         /// <remarks/>
         public Result Result {
             get {
-                return this.resultField5;
+                return this.resultField6;
             }
             set {
-                this.resultField5 = value;
+                this.resultField6 = value;
             }
         }
         
@@ -1954,10 +2013,10 @@ namespace MessageGears.Model.Generated {
         [System.Xml.Serialization.XmlArrayItem(IsNullable=false)]
         public RequestError[] RequestErrors {
             get {
-                return this.requestErrorsField5;
+                return this.requestErrorsField6;
             }
             set {
-                this.requestErrorsField5 = value;
+                this.requestErrorsField6 = value;
             }
         }
         
@@ -2121,31 +2180,31 @@ namespace MessageGears.Model.Generated {
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=false)]
     public partial class CreateAccountResponse {
         
-        private string requestIdField14;
+        private string requestIdField15;
         
-        private Result resultField6;
+        private Result resultField7;
         
-        private RequestError[] requestErrorsField6;
+        private RequestError[] requestErrorsField7;
         
         private Account accountField;
         
         /// <remarks/>
         public string RequestId {
             get {
-                return this.requestIdField14;
+                return this.requestIdField15;
             }
             set {
-                this.requestIdField14 = value;
+                this.requestIdField15 = value;
             }
         }
         
         /// <remarks/>
         public Result Result {
             get {
-                return this.resultField6;
+                return this.resultField7;
             }
             set {
-                this.resultField6 = value;
+                this.resultField7 = value;
             }
         }
         
@@ -2153,10 +2212,10 @@ namespace MessageGears.Model.Generated {
         [System.Xml.Serialization.XmlArrayItem(IsNullable=false)]
         public RequestError[] RequestErrors {
             get {
-                return this.requestErrorsField6;
+                return this.requestErrorsField7;
             }
             set {
-                this.requestErrorsField6 = value;
+                this.requestErrorsField7 = value;
             }
         }
         
@@ -2215,29 +2274,29 @@ namespace MessageGears.Model.Generated {
     [System.Xml.Serialization.XmlRootAttribute(Namespace="http://messagegears.com/3.1/webService", IsNullable=false)]
     public partial class UpdateAccountResponse {
         
-        private string requestIdField15;
+        private string requestIdField16;
         
-        private Result resultField7;
+        private Result resultField8;
         
-        private RequestError[] requestErrorsField7;
+        private RequestError[] requestErrorsField8;
         
         /// <remarks/>
         public string RequestId {
             get {
-                return this.requestIdField15;
+                return this.requestIdField16;
             }
             set {
-                this.requestIdField15 = value;
+                this.requestIdField16 = value;
             }
         }
         
         /// <remarks/>
         public Result Result {
             get {
-                return this.resultField7;
+                return this.resultField8;
             }
             set {
-                this.resultField7 = value;
+                this.resultField8 = value;
             }
         }
         
@@ -2245,10 +2304,10 @@ namespace MessageGears.Model.Generated {
         [System.Xml.Serialization.XmlArrayItem(IsNullable=false)]
         public RequestError[] RequestErrors {
             get {
-                return this.requestErrorsField7;
+                return this.requestErrorsField8;
             }
             set {
-                this.requestErrorsField7 = value;
+                this.requestErrorsField8 = value;
             }
         }
     }
