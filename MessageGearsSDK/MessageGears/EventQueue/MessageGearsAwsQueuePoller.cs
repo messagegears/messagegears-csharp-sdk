@@ -100,12 +100,12 @@ namespace MessageGears.EventQueue
 				numReceived = ProcessMessage();
 				if(numReceived == 0)
 				{
-					log.Info(string.Format("Poller received no items.  Thread will sleep for {0} seconds.", props.EmptyQueuePollingDelaySecs));
+					log.Debug(string.Format("Poller received no items.  Thread will sleep for {0} seconds.", props.EmptyQueuePollingDelaySecs));
 					Thread.Sleep(emptyQueueDelayMillis);
 				}
 				else
 				{
-					log.Info(string.Format("Poller received {0} SQS messages", numReceived));
+					log.Debug(string.Format("Poller received {0} SQS messages", numReceived));
 				}
 			}
 		}
@@ -179,9 +179,9 @@ namespace MessageGears.EventQueue
 			foreach (Amazon.SQS.Model.Attribute attr in message.Attribute) {
 				if(attr.Name.Equals("ApproximateReceiveCount")) {
 					if(Int16.Parse(attr.Value) == 1) {
-						log.Info(attr.Name + ": " + attr.Value);
+						log.Debug(attr.Name + ": " + attr.Value);
 					} else {
-						log.Warn(attr.Name + ": " + attr.Value);
+						log.Info(attr.Name + ": " + attr.Value);
 					}
 				}
 			}
@@ -195,7 +195,7 @@ namespace MessageGears.EventQueue
 			{
 				foreach(BouncedMessageActivity bounce in items.BouncedMessageActivity)
 				{
-					log.Info("Received a bounce message belonging to job: " + bounce.RequestId);
+					log.Debug("Received a bounce message belonging to job: " + bounce.RequestId);
 					listener.OnBounce(bounce);
 				}
 			}
@@ -204,7 +204,7 @@ namespace MessageGears.EventQueue
 			{
 				foreach(ClickActivity click in items.ClickActivity)
 				{
-					log.Info("Received a click message belonging to job: " + click.RequestId);
+					log.Debug("Received a click message belonging to job: " + click.RequestId);
 					listener.OnClick(click);
 				}
 			}
@@ -213,7 +213,7 @@ namespace MessageGears.EventQueue
 			{
 				foreach(DeliveredMessageActivity delivery in items.DeliveredMessageActivity)
 				{
-					log.Info("Received a delivery message belonging to job: " + delivery.RequestId);
+					log.Debug("Received a delivery message belonging to job: " + delivery.RequestId);
 					listener.OnDelivery(delivery);
 				}
 			}
@@ -222,7 +222,7 @@ namespace MessageGears.EventQueue
 			{
 				foreach(JobErrorActivity jobError in items.JobErrorActivity)
 				{
-					log.Info("Received a job error message belonging for job: " + jobError.RequestId);
+					log.Debug("Received a job error message belonging for job: " + jobError.RequestId);
 					listener.OnJobError(jobError);
 				}
 			}
@@ -231,7 +231,7 @@ namespace MessageGears.EventQueue
 			{
 				foreach(OpenActivity open in items.OpenActivity)
 				{
-					log.Info("Received an open message belonging for job: " + open.RequestId);
+					log.Debug("Received an open message belonging for job: " + open.RequestId);
 					listener.OnOpen(open);
 				}
 			}
@@ -240,7 +240,7 @@ namespace MessageGears.EventQueue
 			{
 				foreach(RenderErrorActivity renderError in items.RenderErrorActivity)
 				{
-					log.Info("Received a render error message belonging to job: " + renderError.RequestId);
+					log.Debug("Received a render error message belonging to job: " + renderError.RequestId);
 					listener.OnRenderError(renderError);
 				}
 			}
@@ -249,7 +249,7 @@ namespace MessageGears.EventQueue
 			{
 				foreach(SpamComplaintActivity spamComplaint in items.SpamComplaintActivity)
 				{
-					log.Info("Received a spam complaint message belonging to job: " + spamComplaint.RequestId);
+					log.Debug("Received a spam complaint message belonging to job: " + spamComplaint.RequestId);
 					listener.OnSpamComplaint(spamComplaint);
 				}
 			}
@@ -258,7 +258,7 @@ namespace MessageGears.EventQueue
 			{
 				foreach(UnsubActivity unsub in items.UnsubActivity)
 				{
-					log.Info("Received an unsub message belonging to job: " + unsub.RequestId);
+					log.Debug("Received an unsub message belonging to job: " + unsub.RequestId);
 					listener.OnUnsub(unsub);
 				}		
 			}
