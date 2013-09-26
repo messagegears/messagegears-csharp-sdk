@@ -134,37 +134,13 @@ namespace MessageGears.EventQueue
 					}
 				}
 				
-			} catch (AmazonSQSException ex) {
-				amazonExceptionHandler(ex);
 			} catch (Exception ex) {
-				log.Warn("An unknown error has occurred.  Will retry.", ex);
+				log.Warn("An unknown error has occurred.  Will retry message.", ex);
 			}
 			
 			return numReceived;
 		}
-		
-		private void amazonExceptionHandler(AmazonSQSException ex)
-		{
-			if(ex.ErrorCode.Equals("AWS.SimpleQueueService.NonExistentQueue"))
-			{
-				// Fatal Exception
-				String message = "The specified queue does not exist.";
-				log.Fatal(message);
-				throw new ApplicationException(message, ex);
-			}
-			else if(ex.ErrorCode.Equals("AccessDenied"))
-			{
-				// Fatal Exception
-				String message = "You do not have permission to read the queue.";
-				log.Fatal(message);
-				throw new ApplicationException(message, ex);
-			}
-			else
-			{
-				log.Warn("An unknown error has occurred.  Will retry.", ex);
-			}
-		}
-		
+
 		private ActivityItems getActivityItems(Message message)
 		{
 			XmlSerializer serializer = new XmlSerializer (typeof(ActivityItems));
