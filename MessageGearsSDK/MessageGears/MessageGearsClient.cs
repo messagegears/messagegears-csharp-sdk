@@ -21,6 +21,8 @@ namespace MessageGears
 	public class MessageGearsClient
 	{
 		static readonly ILog log = LogManager.GetLogger(typeof(MessageGearsClient));
+        static readonly string ACTIVITY_DATE_FORMAT = "yyyy-MM-dd";
+        static readonly string ACTIVITY_DATE_MONTHLY_FORMAT = "yyyy-MM";
 		MessageGearsProperties properties = null;
 		
 		/// <summary>
@@ -32,6 +34,57 @@ namespace MessageGears
 		public MessageGearsClient(MessageGearsProperties properties)
 		{
 			this.properties = properties;
+		}
+
+		public AccountActivityResponse AccountActivity (AccountActivityRequest request)
+		{
+			// build POST data 
+			StringBuilder data = new StringBuilder ();
+			data.Append ("Action=" + HttpUtility.UrlEncode (AccountActivityRequest.Action));
+			appendCredentials (ref data);
+			data.Append ("&ActivityDate=" + request.Date.ToString(ACTIVITY_DATE_FORMAT));
+			data.Append ("&ActivityType=" + HttpUtility.UrlEncode (request.ActivityType.ToString()));
+
+			// invoke endpoint
+			string response = invoke (data);
+			
+			XmlSerializer serializer = new XmlSerializer (typeof(AccountActivityResponse));
+			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
+				AccountActivityResponse objectResponse = (AccountActivityResponse)serializer.Deserialize (sr);
+				if (objectResponse.Result.Equals (Result.REQUEST_SUCCESSFUL)) {
+					log.Info ("AccountActivity successfully processed: " + objectResponse.RequestId);
+				} else {
+					log.Error ("AccountActivity failed: " + objectResponse.RequestId);
+				}
+				return objectResponse;
+			}
+		}
+
+		public AccountSummaryResponse AccountSummary (AccountSummaryRequest request)
+		{
+			// build POST data 
+			StringBuilder data = new StringBuilder ();
+			data.Append ("Action=" + HttpUtility.UrlEncode (AccountSummaryRequest.Action));
+			appendCredentials (ref data);
+            if (request.IsMonthly) {
+                data.Append ("&ActivityDate=" + request.Date.ToString(ACTIVITY_DATE_MONTHLY_FORMAT));
+            } else {
+                data.Append ("&ActivityDate=" + request.Date.ToString(ACTIVITY_DATE_FORMAT));
+            }
+
+			// invoke endpoint
+			string response = invoke (data);
+			
+			XmlSerializer serializer = new XmlSerializer (typeof(AccountSummaryResponse));
+			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
+				AccountSummaryResponse objectResponse = (AccountSummaryResponse)serializer.Deserialize (sr);
+				if (objectResponse.Result.Equals (Result.REQUEST_SUCCESSFUL)) {
+					log.Info ("AccountSummary successfully processed: " + objectResponse.RequestId);
+				} else {
+					log.Error ("AccountSummary failed: " + objectResponse.RequestId);
+				}
+				return objectResponse;
+			}
 		}
 
 		/// <summary>
@@ -156,6 +209,7 @@ namespace MessageGears
 			appendCredentials(ref data);
 			appendJobRequest(ref data, request);
 			data.Append ("&RecipientXml=" + HttpUtility.UrlEncode (request.RecipientXml));
+			data.Append ("&ContextDataXml=" + HttpUtility.UrlEncode (request.ContextDataXml));
 			
 			// invoke endpoint
 			string response = invoke (data);
@@ -193,6 +247,7 @@ namespace MessageGears
 			appendCredentials(ref data);
 			appendCampaignRequest(ref data, request);
 			data.Append ("&RecipientXml=" + HttpUtility.UrlEncode (request.RecipientXml));
+			data.Append ("&ContextDataXml=" + HttpUtility.UrlEncode (request.ContextDataXml));
 			
 			// invoke endpoint
 			string response = invoke (data);
@@ -318,6 +373,7 @@ namespace MessageGears
 			StringBuilder data = new StringBuilder ();
 			data.Append ("Action=" + HttpUtility.UrlEncode (BulkCampaignSubmitRequest.Action));
 			data.Append ("&RecipientListXmlUrl=" + HttpUtility.UrlEncode (request.RecipientListXmlUrl));
+			data.Append ("&ContextDataXml=" + HttpUtility.UrlEncode (request.ContextDataXml));
 			appendCredentials(ref data);
 			appendCampaignRequest(ref data, request);
 			
@@ -434,6 +490,43 @@ namespace MessageGears
 			data.Append ("Action=" + HttpUtility.UrlEncode ("BulkJobSummary"));
 			appendCredentials(ref data);
 			data.Append("&BulkJobRequestId=" + HttpUtility.UrlEncode (bulkJobRequestId));
+			
+			// invoke endpoint
+			string response = invoke (data);
+			
+			// deserialize response into BulkJobSummaryResponse
+			XmlSerializer serializer = new XmlSerializer (typeof(BulkJobSummaryResponse));
+			using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
+				BulkJobSummaryResponse objectResponse = (BulkJobSummaryResponse)serializer.Deserialize (sr);
+				if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
+				{
+					log.Info("Bulk Job Summary successfully processed: " + objectResponse.RequestId);
+				}
+				else
+				{
+					log.Error("Bulk Job Summary failed: " + objectResponse.RequestId);
+				}
+				return objectResponse;
+			}
+		}
+		
+		/// <summary>
+		/// Used to return a summary of the total activity for a bulk job (total clicks, bounces, etc.).
+		/// </summary>
+		/// <param name="bulkJobRequestId">
+		/// The id of the bulk job.
+		/// </param>
+		/// <returns>
+		/// A <see cref="BulkJobSummaryResponse"/>
+		/// </returns>
+		public BulkJobSummaryResponse BulkJobSummary(BulkJobSummaryRequest bulkJobSummary) 
+		{
+			// build POST data 
+			StringBuilder data = new StringBuilder ();
+			data.Append ("Action=" + HttpUtility.UrlEncode ("BulkJobSummary"));
+			appendCredentials(ref data);
+			data.Append("&BulkJobCorrelationId=" + HttpUtility.UrlEncode (bulkJobSummary.BulkJobCorrelationId));
+			data.Append("&BulkJobRequestId=" + HttpUtility.UrlEncode (bulkJobSummary.BulkJobRequestId));
 			
 			// invoke endpoint
 			string response = invoke (data);
@@ -865,6 +958,8 @@ namespace MessageGears
 			data.Append ("&UrlAppend=" + HttpUtility.UrlEncode (request.UrlAppend));
 			data.Append ("&CustomTrackingDomain=" + HttpUtility.UrlEncode (request.CustomTrackingDomain));
 			data.Append ("&UnsubscribeHeader=" + HttpUtility.UrlEncode (request.UnsubscribeHeader.ToString()));
+			data.Append ("&TemplateLibrary=" + HttpUtility.UrlEncode (request.TemplateLibrary));
+			data.Append ("&JobCategory=" + HttpUtility.UrlEncode (request.JobCategory));
 			
 			String attachmentCount;
 			for (int i=0; i < request.attachments.Count; i++)

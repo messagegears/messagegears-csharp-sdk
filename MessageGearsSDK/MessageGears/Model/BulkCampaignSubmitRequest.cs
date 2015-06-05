@@ -19,6 +19,12 @@ namespace MessageGears.Model
 		/// See the MessageGears online API docs for more information.
 		/// </summary>
 		public string RecipientListXmlUrl { get; set; }
+
+        /// <summary>
+        /// The XML structure that contains non-recipient information needed for the job.
+        /// </summary>
+		public string ContextDataXml { get; set; }
+
 	}
 }
 

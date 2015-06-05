@@ -110,6 +110,16 @@ namespace MessageGears.Model
 		/// A list of up to 5 headers that will be set for each message in the job.
 		/// </summary>
 		public List<Header> headers = new List<Header> ();
+
+        /// <summary>
+        /// The in-line shared content library for this job. The template for this job can refer to macros, functions, and other content defined within the library.
+        /// </summary>
+        public string TemplateLibrary { get; set; }
+
+        /// <summary>
+        /// A category for the job.
+        /// </summary>
+        public string JobCategory { get; set; }
 		
 	}
 }

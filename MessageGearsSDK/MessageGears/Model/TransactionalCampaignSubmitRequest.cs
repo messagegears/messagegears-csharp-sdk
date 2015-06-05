@@ -17,5 +17,11 @@ namespace MessageGears.Model
 		/// The XML structure that contains all of the information needed about an individual recipient.
 		/// </summary>
 		public string RecipientXml { get; set; }
+
+        /// <summary>
+        /// The XML structure that contains non-recipient information needed for the job.
+        /// </summary>
+        public string ContextDataXml { get; set; }
+
 	}
 }
