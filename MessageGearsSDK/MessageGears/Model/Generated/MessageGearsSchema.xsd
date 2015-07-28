@@ -92,6 +92,41 @@
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
+    <xsd:element name="TransactionalContent">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:Result" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:RequestErrors" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="mg:RenderErrors" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="OriginalRequestId" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="FromAddress" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="FromName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="SubjectLine" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="TextContent" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="HtmlContent" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="CorrelationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="JobCategory" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="RecipientId" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element ref="mg:Attachments" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="Attachments">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="mg:Attachment" minOccurs="0" maxOccurs="5"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="Attachment">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="Name" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="ContentType" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
     <xsd:element name="BulkJobSummaryResponse">
         <xsd:complexType>
             <xsd:sequence>

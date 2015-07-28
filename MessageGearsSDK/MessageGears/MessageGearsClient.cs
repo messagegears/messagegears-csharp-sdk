@@ -509,6 +509,42 @@ namespace MessageGears
                 return objectResponse;
             }
         }
+
+        /// <summary>
+        /// Used to return content of a transactional job or campaign
+        /// </summary>
+        /// <param name="originalRequestId">
+        /// The id of the job or campaign to be retrieved.
+        /// </param>
+        /// <returns>
+        /// A <see cref="TransactionalContent"/>
+        /// </returns>
+        public TransactionalContent TransactionalContent(String originalRequestId) 
+        {
+            // build POST data 
+            StringBuilder data = new StringBuilder ();
+            data.Append ("Action=" + HttpUtility.UrlEncode ("TransactionalContentRetrieval"));
+            appendCredentials(ref data);
+            data.Append("&OriginalRequestId=" + HttpUtility.UrlEncode (bulkJobRequestId));
+            
+            // invoke endpoint
+            string response = invoke (data);
+            
+            // deserialize response into TransactionalContent
+            XmlSerializer serializer = new XmlSerializer (typeof(TransactionalContent));
+            using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
+                BulkJobSummaryResponse objectResponse = (BulkJobSummaryResponse)serializer.Deserialize (sr);
+                if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
+                {
+                    log.Info("Transactional Content Retrieval successfully processed: " + objectResponse.RequestId);
+                }
+                else
+                {
+                    log.Error("Transactional Content Retrieval  failed: " + objectResponse.RequestId);
+                }
+                return objectResponse;
+            }
+        }
         
         /// <summary>
         /// Used to return a summary of the total activity for a bulk job (total clicks, bounces, etc.).
@@ -691,6 +727,38 @@ namespace MessageGears
             }
         }
         
+        /// <summary>
+        /// Utility function to print response data to the console.
+        /// </summary>
+        /// <param name="response">
+        /// The TransactionalContent to be printed.<see cref="TransactionalContent"/>
+        /// </param>
+        public void PrintResponse(TransactionalContent response) {
+            PrintResponse(response.Result, response.RequestErrors);
+            if (response.Result == Result.REQUEST_SUCCESSFUL) {                
+                if (response.RenderErrors == null) {
+                    Console.WriteLine("FromName: " + response.PreviewContent.FromName +
+                                      " <" + response.PreviewContent.FromAddress + ">");
+                    Console.WriteLine("Subject: " + response.PreviewContent.SubjectLine);
+                    Console.WriteLine("HtmlContent: " + response.PreviewContent.HtmlContent);
+                    Console.WriteLine("TextContent: " + response.PreviewContent.TextContent);
+                    Console.WriteLine("Attachments:");
+                    foreach(Attachment attachment in response.Attachment) {
+                        Console.WriteLine("            Name: " attachment.NAme);
+                        Console.WriteLine("    Content-Type: " attachment.ContentType);
+                    }
+                } else {
+                    foreach(RenderError error in response.RenderErrors) {
+                        Console.WriteLine("RenderError: " + error.ErrorCode + " - " + error.ErrorMessage);
+                    }
+                }
+            } else {
+                foreach(RequestError error in response.RequestErrors) {
+                    Console.WriteLine("RequestError: " + error.ErrorCode + " - " + error.ErrorMessage);
+                }
+            }
+        }
+
         /// <summary>
         /// Utility function to print response data to the console.
         /// </summary>
