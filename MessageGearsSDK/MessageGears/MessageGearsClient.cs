@@ -533,7 +533,7 @@ namespace MessageGears
             // deserialize response into TransactionalContent
             XmlSerializer serializer = new XmlSerializer (typeof(TransactionalContent));
             using (XmlTextReader sr = new XmlTextReader (new StringReader (response))) {
-                TransactionalContent objectResponse = (BulkJobSummaryResponse)serializer.Deserialize (sr);
+                TransactionalContent objectResponse = (TransactionalContent)serializer.Deserialize (sr);
                 if(objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
                 {
                     log.Info("Transactional Content Retrieval successfully processed: " + objectResponse.RequestId);
@@ -743,9 +743,9 @@ namespace MessageGears
                     Console.WriteLine("HtmlContent: " + response.HtmlContent);
                     Console.WriteLine("TextContent: " + response.TextContent);
                     Console.WriteLine("Attachments:");
-                    foreach(Attachment attachment in response.Attachment) {
-                        Console.WriteLine("            Name: " attachment.Name);
-                        Console.WriteLine("    Content-Type: " attachment.ContentType);
+                    foreach(Attachment attachment in response.Attachments) {
+                        Console.WriteLine("            Name: " + attachment.Name);
+                        Console.WriteLine("    Content-Type: " + attachment.ContentType);
                     }
                 } else {
                     foreach(RenderError error in response.RenderErrors) {
