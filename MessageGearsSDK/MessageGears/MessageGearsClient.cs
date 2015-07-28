@@ -743,7 +743,7 @@ namespace MessageGears
                     Console.WriteLine("HtmlContent: " + response.HtmlContent);
                     Console.WriteLine("TextContent: " + response.TextContent);
                     Console.WriteLine("Attachments:");
-                    foreach(Attachment attachment in response.Attachments) {
+                    foreach(MessageGears.Model.Generated.Attachment attachment in response.Attachments) {
                         Console.WriteLine("            Name: " + attachment.Name);
                         Console.WriteLine("    Content-Type: " + attachment.ContentType);
                     }
