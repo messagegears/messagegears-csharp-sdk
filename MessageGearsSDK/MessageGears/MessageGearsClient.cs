@@ -519,13 +519,13 @@ namespace MessageGears
         /// <returns>
         /// A <see cref="TransactionalContent"/>
         /// </returns>
-        public TransactionalContent TransactionalContentRetrieval(String originalRequestId) 
+        public TransactionalContent TransactionalContentRetrieval(TransactionalContentRetrievalRequest request) 
         {
             // build POST data 
             StringBuilder data = new StringBuilder ();
             data.Append ("Action=" + HttpUtility.UrlEncode ("TransactionalContentRetrieval"));
             appendCredentials(ref data);
-            data.Append("&OriginalRequestId=" + HttpUtility.UrlEncode (originalRequestId));
+            data.Append("&OriginalRequestId=" + HttpUtility.UrlEncode (request.OriginalRequestId));
             
             // invoke endpoint
             string response = invoke (data);
