@@ -1033,6 +1033,7 @@ namespace MessageGears
             for (int i=0; i < request.attachments.Count; i++)
             {
                 attachmentCount = (i+1).ToString("D");
+                data.Append ("&AttachmentContent." + attachmentCount + "=" + HttpUtility.UrlEncode (request.attachments[i].Content));
                 data.Append ("&AttachmentUrl." + attachmentCount + "=" + HttpUtility.UrlEncode (request.attachments[i].Url));
                 data.Append ("&AttachmentName." + attachmentCount + "=" + HttpUtility.UrlEncode (request.attachments[i].DisplayName));
                 data.Append ("&AttachmentContentType." + attachmentCount + "=" + HttpUtility.UrlEncode (request.attachments[i].ContentType));

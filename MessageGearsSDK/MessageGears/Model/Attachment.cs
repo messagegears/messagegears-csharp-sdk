@@ -14,6 +14,11 @@ namespace MessageGears.Model
         public String Url { get; set; }
         
         /// <summary>
+        /// The Base64 encoded string, capturing the content of the in-line attachment
+        /// </summary>
+        public String Content { get; set; }
+        
+        /// <summary>
         /// The name of the attachment as it will be displayed in the email message content.
         /// </summary>
         public String DisplayName { get; set; }
