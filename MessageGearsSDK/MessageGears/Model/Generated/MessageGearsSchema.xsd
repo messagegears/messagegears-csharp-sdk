@@ -92,6 +92,17 @@
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
+    <xsd:element name="JobStateResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="RequestId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:Result" minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="mg:RequestErrors" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="JobRequestId" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="JobState" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
     <xsd:element name="TransactionalContent">
         <xsd:complexType>
             <xsd:sequence>
