@@ -377,10 +377,8 @@ namespace MessageGears
             appendCredentials(ref data);
             appendCampaignRequest(ref data, request);
             
-            Console.WriteLine(request);
             // invoke endpoint
             string response = invoke (data);
-            Console.WriteLine(response);
             
             // deserialize response into BulkJobSubmitResponse
             XmlSerializer serializer = new XmlSerializer (typeof(BulkJobSubmitResponse));
@@ -505,6 +503,79 @@ namespace MessageGears
                 else
                 {
                     log.Error("Bulk Job Summary failed: " + objectResponse.RequestId);
+                }
+                return objectResponse;
+            }
+        }
+
+        /// <summary>
+        /// Used to set a job to a given state (pause/resume/cancel)
+        /// </summary>
+        /// <param name="jobStateRequest">
+        /// The representation of the request, including the job request id to set the state on, and the state to set
+        /// </param>
+        /// <returns>
+        /// A <see cref="JobStateResponse"/>
+        /// </returns>
+        public JobStateResponse SetJobState(JobStateRequest jobStateRequest)
+        {
+            // build POST data 
+            StringBuilder data = new StringBuilder();
+            data.Append("Action=" + HttpUtility.UrlEncode(JobStateRequest.Action));
+            appendCredentials(ref data);
+            data.Append("&jobRequestId=" + HttpUtility.UrlEncode(jobStateRequest.JobRequestId));
+            data.Append("&status=" + HttpUtility.UrlEncode(jobStateRequest.JobStatus));
+            // invoke endpoint
+            string response = invoke(data);
+
+            // deserialize response into JobStateResponse
+            XmlSerializer serializer = new XmlSerializer(typeof(JobStateResponse));
+            using (XmlTextReader sr = new XmlTextReader(new StringReader(response)))
+            {
+                JobStateResponse objectResponse = (JobStateResponse)serializer.Deserialize(sr);
+                if (objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
+                {
+                    log.Info("Set Job State successfully processed: " + objectResponse.RequestId);
+                }
+                else
+                {
+                    log.Error("Set Job State failed: " + objectResponse.RequestId);
+                }
+                return objectResponse;
+            }
+        }
+
+        /// <summary>
+        /// Used to retrieve the current state of a given job (pause/resume/cancel)
+        /// </summary>
+        /// <param name="jobStateRetrievalRequest">
+        /// The representation of the request, including the job request id to get the state
+        /// </param>
+        /// <returns>
+        /// A <see cref="JobStateResponse"/>
+        /// </returns>
+        public JobStateResponse RetrieveJobState(JobStateRetrievalRequest jobStateRequest)
+        {
+            // build POST data 
+            StringBuilder data = new StringBuilder();
+            data.Append("Action=" + HttpUtility.UrlEncode(JobStateRetrievalRequest.Action));
+            appendCredentials(ref data);
+            data.Append("&jobRequestId=" + HttpUtility.UrlEncode(jobStateRequest.JobRequestId));
+            // invoke endpoint
+            string response = invoke(data);
+
+            // deserialize response into JobStateResponse
+            XmlSerializer serializer = new XmlSerializer(typeof(JobStateResponse));
+            using (XmlTextReader sr = new XmlTextReader(new StringReader(response)))
+            {
+                JobStateResponse objectResponse = (JobStateResponse)serializer.Deserialize(sr);
+                if (objectResponse.Result.Equals(Result.REQUEST_SUCCESSFUL))
+                {
+                    log.Info("Retrieve Job State successfully processed: " + objectResponse.RequestId);
+                }
+                else
+                {
+                    log.Error("Retrieve Job State failed: " + objectResponse.RequestId);
                 }
                 return objectResponse;
             }
@@ -946,7 +1017,6 @@ namespace MessageGears
             // Set type to POST  
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
-            
             log.Debug("Post request: " + data.ToString());
             
             // Create a byte array of the data we want to send  
@@ -1029,11 +1099,11 @@ namespace MessageGears
             data.Append ("&TemplateLibrary=" + HttpUtility.UrlEncode (request.TemplateLibrary));
             data.Append ("&JobCategory=" + HttpUtility.UrlEncode (request.JobCategory));
             
-            String attachmentCount;
+            String attachmentCount; 
             for (int i=0; i < request.attachments.Count; i++)
             {
                 attachmentCount = (i+1).ToString("D");
-                data.Append ("&AttachmentContent." + attachmentCount + "=" + HttpUtility.UrlEncode (request.attachments[i].Content));
+                data.Append ("&AttachmentContent." + attachmentCount + "=" + HttpUtility.UrlEncode(request.attachments[i].Content));
                 data.Append ("&AttachmentUrl." + attachmentCount + "=" + HttpUtility.UrlEncode (request.attachments[i].Url));
                 data.Append ("&AttachmentName." + attachmentCount + "=" + HttpUtility.UrlEncode (request.attachments[i].DisplayName));
                 data.Append ("&AttachmentContentType." + attachmentCount + "=" + HttpUtility.UrlEncode (request.attachments[i].ContentType));
