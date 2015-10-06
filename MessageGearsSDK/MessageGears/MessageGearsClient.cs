@@ -325,7 +325,14 @@ namespace MessageGears
             data.Append ("Action=" + HttpUtility.UrlEncode (BulkJobSubmitRequest.Action));
             data.Append ("&RecipientListXmlUrl=" + HttpUtility.UrlEncode (request.RecipientListXmlUrl));
             data.Append ("&ContextDataXml=" + HttpUtility.UrlEncode (request.ContextDataXml));
-
+            
+            if (!String.IsNullOrEmpty (request.SuppressionXmlUrl)) {
+                data.Append ("&SuppressionXmlUrl=" + HttpUtility.UrlEncode (request.SuppressionXmlUrl));
+            }
+            if (!String.IsNullOrEmpty (request.SuppressionCsvUrl)) {
+                data.Append ("&SuppressionCsvUrl=" + HttpUtility.UrlEncode (request.SuppressionCsvUrl));
+            }
+            
             // add optional templates via URL if set
             if (!String.IsNullOrEmpty (request.HtmlTemplateUrl)) {
                 data.Append ("&HtmlTemplateUrl=" + HttpUtility.UrlEncode (request.HtmlTemplateUrl));
@@ -374,6 +381,12 @@ namespace MessageGears
             data.Append ("Action=" + HttpUtility.UrlEncode (BulkCampaignSubmitRequest.Action));
             data.Append ("&RecipientListXmlUrl=" + HttpUtility.UrlEncode (request.RecipientListXmlUrl));
             data.Append ("&ContextDataXml=" + HttpUtility.UrlEncode (request.ContextDataXml));
+            if (!String.IsNullOrEmpty (request.SuppressionXmlUrl)) {
+                data.Append ("&SuppressionXmlUrl=" + HttpUtility.UrlEncode (request.SuppressionXmlUrl));
+            }
+            if (!String.IsNullOrEmpty (request.SuppressionCsvUrl)) {
+                data.Append ("&SuppressionCsvUrl=" + HttpUtility.UrlEncode (request.SuppressionCsvUrl));
+            }
             appendCredentials(ref data);
             appendCampaignRequest(ref data, request);
             

@@ -19,6 +19,10 @@ namespace MessageGears.Model
         /// See the MessageGears online API docs for more information.
         /// </summary>
         public string RecipientListXmlUrl { get; set; }
+        
+        public string SuppressionXmlUrl { get; set; }
+        
+        public string SuppressionCsvUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the html template URL.

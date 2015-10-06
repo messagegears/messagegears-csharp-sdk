@@ -25,6 +25,10 @@ namespace MessageGears.Model
         /// </summary>
         public string ContextDataXml { get; set; }
 
+        public string SuppressionXmlUrl { get; set; }
+        
+        public string SuppressionCsvUrl { get; set; }
+
     }
 }
 
